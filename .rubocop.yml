@@ -5,6 +5,22 @@ require:
 
 AllCops:
   NewCops: enable
+  Exclude:
+  - 'vendor/**/*'
+  - 'db/**/*'
+  - 'bin/**/*'
+  - 'spec/**/*'
+  - 'node_modules/**/*'
+  - 'config/puma.rb'
+  - 'config/spring.rb'
+  - 'config/initializers/backtrace_silencers.rb'
+  - 'config/boot.rb'
+  - 'Rakefile'
+  - 'config/initializers/filter_parameter_logging.rb'
+  - 'test/**/*'
 
 Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/Documentation:
   Enabled: false
