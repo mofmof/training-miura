@@ -62,7 +62,6 @@ group :development do
   gem 'rubocop-rspec'
 
   gem 'graphiql-rails'
-  gem 'sass-rails'
 end
 
 group :test do
