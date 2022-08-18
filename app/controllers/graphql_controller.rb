@@ -12,17 +12,18 @@ class GraphqlController < ApplicationController
       # Query context goes here, for example:
       # current_user: current_user,
     }
-    result = MyappSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
+    result = MyappSchema.execute(query, variables:, context:, operation_name:)
     render json: result
   rescue StandardError => e
     raise e unless Rails.env.development?
+
     handle_error_in_development(e)
   end
 
   private
 
   # Handle variables in form data, JSON body, or a blank value
-  def prepare_variables(variables_param)
+  def prepare_variables(variables_param) # rubocop:disable Metrics/MethodLength
     case variables_param
     when String
       if variables_param.present?
@@ -41,10 +42,10 @@ class GraphqlController < ApplicationController
     end
   end
 
-  def handle_error_in_development(e)
+  def handle_error_in_development(e) # rubocop:disable Naming/MethodParameterName
     logger.error e.message
     logger.error e.backtrace.join("\n")
 
-    render json: { errors: [{ message: e.message, backtrace: e.backtrace }], data: {} }, status: 500
+    render json: { errors: [{ message: e.message, backtrace: e.backtrace }], data: {} }, status: :internal_server_error
   end
 end
