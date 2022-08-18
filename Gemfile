@@ -60,6 +60,8 @@ group :development do
   gem 'rubocop-performance'
   gem 'rubocop-rails'
   gem 'rubocop-rspec'
+
+  gem 'graphiql-rails'
 end
 
 group :test do
@@ -68,3 +70,5 @@ group :test do
   gem 'selenium-webdriver'
   gem 'webdrivers'
 end
+
+gem 'graphql'
