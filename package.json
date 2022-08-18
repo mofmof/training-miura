@@ -1,14 +1,27 @@
 {
   "name": "app",
-  "private": "true",
+  "private": true,
   "dependencies": {
     "autoprefixer": "^10.4.8",
     "esbuild": "^0.15.5",
     "postcss": "^8.4.16",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "tailwindcss": "^3.1.8"
   },
   "scripts": {
     "build": "esbuild app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds --public-path=assets",
     "build:css": "tailwindcss -i ./app/assets/stylesheets/application.tailwind.css -o ./app/assets/builds/application.css --minify"
-  }
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.17",
+    "@types/react-dom": "^18.0.6",
+    "tsc-watch": "^5.0.3",
+    "typescript": "^4.7.4"
+  },
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:mofmof/training-miura.git",
+  "author": "miura <s.miura@mof-mof.co.jp>",
+  "license": "MIT"
 }
