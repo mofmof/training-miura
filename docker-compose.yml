@@ -8,7 +8,7 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     ports:
-      - 5000:5000 # 左がローカル、右がdockerのport番号
+      - 15432:5432 # 左がローカル、右がdockerのport番号
 
   web:
     build: .
