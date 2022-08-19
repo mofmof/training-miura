@@ -9,12 +9,12 @@ const FETCH_TASKS = gql`
   }
 `;
 
-interface Task {
-  id: string;
+type Task = {
+  id: number;
   title: string;
 }
 
-function App() {
+const App = () => {
   const { data: { tasks = [] } = {} } = useQuery(FETCH_TASKS);
 
   return (

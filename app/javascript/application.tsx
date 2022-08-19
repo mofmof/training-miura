@@ -22,7 +22,6 @@ const client = new ApolloClient({
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-	console.log(123)
   root.render(
     <React.StrictMode>
       <ApolloProvider client={client}>
