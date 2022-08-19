@@ -1,3 +1,3 @@
 class ApplicationController < ActionController::Base
-  skip_forgery_protection
+  protect_from_forgery with: :null_session
 end
