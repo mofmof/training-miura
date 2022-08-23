@@ -8,10 +8,11 @@ import {
 } from "react-router-dom";
 
 const FETCH_TASK = gql`
-  query ($id: Int) {
-    task(id: 3) {
+  query ($id: ID!) {
+    task(id: $id) {
       id
       title
+			body
     }
   }
 `;
@@ -23,13 +24,16 @@ type Task = {
 }
 
 const TaskShow = () => {
-	const { data: { task } = {} } = useQuery(FETCH_TASK);
-	// const { data: { id } = { task } } = useQuery(FETCH_TASK);
-  // let { id } = useParams();
+  const { id } = useParams();
+	const { loading, error, data: {task} = {}} = useQuery(FETCH_TASK, { variables: { id: id }});
+  if (loading) return <p>Loading...</p>
+  if (error) return <p>`Error! ${error.message}`;</p>
 
   return (
     <div>
-      <p> {task.title}</p>
+      <p>{task.id}</p>
+			<p>{task.title}</p>
+			<p>{task.body}</p>
     </div>
   );
 }
