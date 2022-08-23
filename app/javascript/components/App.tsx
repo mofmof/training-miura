@@ -1,28 +1,20 @@
-import { useQuery, gql } from "@apollo/client";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link,
+} from "react-router-dom";
+import Tasks from './Tasks';
+import TaskShow from './TaskShow';
 
-const FETCH_TASKS = gql`
-  query {
-    tasks {
-      id
-      title
-    }
-  }
-`;
-
-type Task = {
-  id: number;
-  title: string;
-}
-
-const App = () => {
-  const { data: { tasks = [] } = {} } = useQuery(FETCH_TASKS);
-
+function App() {
   return (
-    <div>
-      {tasks.map((task: Task) => (
-        <div key={task.id}>{task.title}</div>
-      ))}
-    </div>
+    <Router>
+        <Routes>
+          <Route path="/" element={<Tasks />}></Route>
+          <Route path="tasks/:id" element={<TaskShow />} ></Route>
+        </Routes>
+    </Router>
   );
 }
 
