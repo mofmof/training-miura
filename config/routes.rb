@@ -3,4 +3,6 @@ Rails.application.routes.draw do
   post '/graphql', to: 'graphql#execute'
 
   root to: 'tasks#index'
+
+  get 'tasks/:id', to: 'tasks#index'
 end
