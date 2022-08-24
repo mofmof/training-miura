@@ -24,7 +24,7 @@ const Tasks = () => {
         <Link to={`/tasks/${task.id}`} key={task.id}>{task.title}</Link>
       ))}
     </div>
-	)
+  )
 }
 
 export default Tasks;

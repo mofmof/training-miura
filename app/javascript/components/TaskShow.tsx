@@ -6,7 +6,7 @@ const FETCH_TASK = gql`
     task(id: $id) {
       id
       title
-			body
+      body
     }
   }
 `;
@@ -19,15 +19,15 @@ type Task = {
 
 const TaskShow = () => {
   const { id } = useParams();
-	const { loading, error, data: {task} = {}} = useQuery(FETCH_TASK, { variables: { id: id }});
-	const taskShow: Task = task
+  const { loading, error, data: {task} = {}} = useQuery(FETCH_TASK, { variables: { id: id }});
+  const taskShow: Task = task
   if (loading) return <p>Loading...</p>
   if (error) return <p>`Error! ${error.message}`;</p>
   return (
     <div>
       <p>{taskShow.id}</p>
-			<p>{taskShow.title}</p>
-			<p>{taskShow.body}</p>
+      <p>{taskShow.title}</p>
+      <p>{taskShow.body}</p>
     </div>
   );
 }
