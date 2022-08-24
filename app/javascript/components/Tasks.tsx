@@ -1,8 +1,5 @@
 import { useQuery, gql } from "@apollo/client";
-import {
-  BrowserRouter as Router,
-  Link,
-} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const FETCH_TASKS = gql`
   query {
