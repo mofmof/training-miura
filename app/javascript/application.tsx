@@ -1,6 +1,6 @@
-import React from 'react';
-import { createRoot } from 'react-dom/client';
-import App from './components/App';
+import React from "react";
+import { createRoot } from "react-dom/client";
+import App from "./components/App";
 import {
   ApolloClient,
   InMemoryCache,
@@ -8,7 +8,7 @@ import {
   createHttpLink,
 } from "@apollo/client";
 
-const container = document.getElementById('root') as HTMLElement;
+const container = document.getElementById("root") as HTMLElement;
 const root = createRoot(container);
 
 const link = createHttpLink({
@@ -21,7 +21,7 @@ const client = new ApolloClient({
   link: link,
 });
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
   root.render(
     <React.StrictMode>
       <ApolloProvider client={client}>

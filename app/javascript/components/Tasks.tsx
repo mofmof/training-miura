@@ -13,7 +13,7 @@ const FETCH_TASKS = gql`
 type Task = {
   id: number;
   title: string;
-}
+};
 
 const Tasks = () => {
   const { data: { tasks = [] } = {} } = useQuery(FETCH_TASKS);
@@ -21,10 +21,12 @@ const Tasks = () => {
   return (
     <div>
       {tasks.map((task: Task) => (
-        <Link to={`/tasks/${task.id}`} key={task.id}>{task.title}</Link>
+        <Link to={`/tasks/${task.id}`} key={task.id}>
+          {task.title}
+        </Link>
       ))}
     </div>
-  )
-}
+  );
+};
 
 export default Tasks;
