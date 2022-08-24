@@ -11,8 +11,9 @@ services:
       - 15432:5432 # 左がローカル、右がdockerのport番号
 
   web:
+    tty: true
     build: .
-    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    command: bash -c "rm -f tmp/pids/server.pid && yarn install && ./bin/dev"
     volumes:
       - .:/myapp
     ports:
