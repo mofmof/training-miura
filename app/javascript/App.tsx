@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Tasks from "./Tasks";
-import TaskShow from "./TaskShow";
+import Tasks from "./components/Tasks";
+import TaskShow from "./components/TaskShow";
 
 function App() {
   return (
