@@ -1,16 +1,18 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Tasks from "./components/Tasks";
 import TaskShow from "./components/TaskShow";
+import TopPage from "./components/TopPage";
 
-function App() {
+const App = () => {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Tasks />}></Route>
-        <Route path="tasks/:id" element={<TaskShow />}></Route>
-      </Routes>
-    </Router>
+    <>
+      <Router>
+        <Routes>
+          <Route path="/" element={<TopPage />}></Route>
+          <Route path="tasks/:id" element={<TaskShow />}></Route>
+        </Routes>
+      </Router>
+    </>
   );
-}
+};
 
 export default App;

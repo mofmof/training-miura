@@ -1,30 +1,18 @@
-import { useQuery, gql } from "@apollo/client";
 import { Link } from "react-router-dom";
-
-const FETCH_TASKS = gql`
-  query {
-    tasks {
-      id
-      title
-    }
-  }
-`;
-
-type Task = {
-  id: number;
-  title: string;
-};
+import { useTasksQuery } from "../graphql/generated";
 
 const Tasks = () => {
-  const { data: { tasks = [] } = {} } = useQuery(FETCH_TASKS);
+  const { data: { tasks = [] } = {} } = useTasksQuery();
 
   return (
     <div>
-      {tasks.map((task: Task) => (
-        <Link to={`/tasks/${task.id}`} key={task.id}>
-          {task.title}
-        </Link>
-      ))}
+      <ul>
+        {tasks.map((task) => (
+          <li key={task.id}>
+            <Link to={`/tasks/${task.id}`}>{task.title}</Link>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };
