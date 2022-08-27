@@ -13,7 +13,7 @@ services:
   web:
     tty: true
     build: .
-    command: bash -c "rm -f tmp/pids/server.pid && yarn install --ignore-engines && ./bin/dev"
+    command: bash -c "rm -f tmp/pids/server.pid && yarn install  && ./bin/dev"
     volumes:
       - .:/myapp
     ports:
