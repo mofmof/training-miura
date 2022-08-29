@@ -27,7 +27,7 @@ const InputTask = () => {
         />
       </div>
       <div>
-        <input
+        <textarea
           value={body}
           placeholder="内容を入力"
           onChange={(e) => setBody(e.target.value)}
