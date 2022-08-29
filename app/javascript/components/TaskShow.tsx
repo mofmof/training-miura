@@ -31,7 +31,7 @@ const TaskShow = () => {
     <div>
       <p>{taskShow.id}</p>
       <p>{taskShow.title}</p>
-      <p>{taskShow.body}</p>
+      <p style={{ whiteSpace: "pre-line" }}>{taskShow.body}</p>
     </div>
   );
 };
