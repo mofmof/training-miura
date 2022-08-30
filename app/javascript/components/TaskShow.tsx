@@ -1,7 +1,9 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useTaskQuery } from "../graphql/generated";
 
 const TaskShow = () => {
+  const navigate = useNavigate();
+  const onClickTaskShow = () => navigate(`/tasks/${id}/edit`);
   const { id } = useParams();
   const {
     loading,
@@ -16,6 +18,7 @@ const TaskShow = () => {
       <p>{task.id}</p>
       <p>{task.title}</p>
       <p style={{ whiteSpace: "pre-line" }}>{task.body}</p>
+      <button onClick={onClickTaskShow}>編集</button>
     </div>
   );
 };
