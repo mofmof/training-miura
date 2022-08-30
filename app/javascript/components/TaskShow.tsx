@@ -1,21 +1,5 @@
-import { useQuery, gql } from "@apollo/client";
 import { useParams } from "react-router-dom";
-
-const FETCH_TASK = gql`
-  query ($id: ID!) {
-    task(id: $id) {
-      id
-      title
-      body
-    }
-  }
-`;
-
-type Task = {
-  id: number;
-  title: string;
-  body: string;
-};
+import { useTaskQuery } from "../graphql/generated";
 
 const TaskShow = () => {
   const { id } = useParams();
@@ -23,15 +7,15 @@ const TaskShow = () => {
     loading,
     error,
     data: { task } = {},
-  } = useQuery(FETCH_TASK, { variables: { id: id } });
-  const taskShow: Task = task;
+  } = useTaskQuery({ variables: { id: id as string } });
   if (loading) return <p>Loading...</p>;
   if (error) return <p>`Error! ${error.message}`;</p>;
+  if (!task) return <p>Not found</p>;
   return (
     <div>
-      <p>{taskShow.id}</p>
-      <p>{taskShow.title}</p>
-      <p style={{ whiteSpace: "pre-line" }}>{taskShow.body}</p>
+      <p>{task.id}</p>
+      <p>{task.title}</p>
+      <p style={{ whiteSpace: "pre-line" }}>{task.body}</p>
     </div>
   );
 };
