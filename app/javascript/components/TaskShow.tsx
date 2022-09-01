@@ -1,5 +1,6 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useTaskQuery } from "../graphql/generated";
+import TaskDelete from "./TaskDelete";
 
 const TaskShow = () => {
   const navigate = useNavigate();
@@ -19,6 +20,7 @@ const TaskShow = () => {
       <p>{task.title}</p>
       <p style={{ whiteSpace: "pre-line" }}>{task.body}</p>
       <button onClick={onClickTaskShow}>編集</button>
+      <TaskDelete id={task.id} />
     </div>
   );
 };
