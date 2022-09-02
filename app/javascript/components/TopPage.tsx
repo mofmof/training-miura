@@ -1,21 +1,23 @@
 import Tasks from "./Tasks";
 import InputTask from "./InputTask";
-import { useLocation } from "react-router-dom";
-import { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const TopPage = () => {
   const location = useLocation();
   let flashMsg = location.state as { msg: string };
-  const [message, setMessage] = useState(flashMsg.msg);
-  if (flashMsg) {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!flashMsg) return;
     setInterval(() => {
-      flashMsg.msg = "";
-      setMessage(flashMsg.msg);
+      navigate("/", {});
     }, 2000);
-  }
+  }, [flashMsg]);
+
   return (
     <>
-      <p>{message}</p>
+      <p>{flashMsg?.msg}</p>
       <Tasks />
       <InputTask />
     </>
