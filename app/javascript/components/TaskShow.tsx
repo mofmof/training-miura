@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useTaskQuery } from "../graphql/generated";
 import TaskDelete from "./TaskDelete";
+import FlashMessage from "./FlashMessage";
 
 const TaskShow = () => {
   const navigate = useNavigate();
@@ -16,6 +17,7 @@ const TaskShow = () => {
   if (!task) return <p>Not found</p>;
   return (
     <div>
+      <FlashMessage />
       <p>{task.id}</p>
       <p>{task.title}</p>
       <p style={{ whiteSpace: "pre-line" }}>{task.body}</p>
