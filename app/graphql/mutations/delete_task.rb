@@ -5,7 +5,7 @@ module Mutations
     field :id, ID, null: false
 
     def resolve(id:)
-      Task.find(id).delete
+      Task.find(id).destroy!
 
       { id: }
     rescue StandardError => e
