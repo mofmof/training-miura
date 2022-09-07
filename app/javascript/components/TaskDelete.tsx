@@ -6,23 +6,20 @@ type Props = {
 };
 
 const TaskDelete: React.FC<Props> = (props) => {
-  const navigate = useNavigate();
-  const deleteSuccessRedirect = () =>
-    navigate("/", { state: { msg: "削除成功" } });
-  const deleteFailRedirect = () =>
-    navigate(`/tasks/${id}`, { state: { msg: "削除失敗" } });
-
   const { id } = props;
+  const navigate = useNavigate();
   const [deleteTask] = useDeleteTaskMutation({
     refetchQueries: ["tasks"],
-    onError: (error) => {
-      if (error) deleteFailRedirect();
-      return;
+    onError: () => {
+      navigate(`/tasks/${id}`, { state: { msg: "削除失敗" } });
+    },
+    onCompleted: () => {
+      navigate("/", { state: { msg: "削除成功" } });
     },
   });
+
   const onClickTaskDelete = () => {
     deleteTask({ variables: { id: id } });
-    deleteSuccessRedirect();
   };
 
   return <button onClick={onClickTaskDelete}>削除</button>;
