@@ -1,23 +1,19 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 
 const FlashMessage = () => {
   const location = useLocation();
-  let locationState = location.state as { msg: string | null };
-  const flashMsg = useRef(locationState?.msg);
+  const locationState = location.state as { msg: string };
   const navigate = useNavigate();
-  const locationPath = location.pathname;
 
   useEffect(() => {
-    if (!flashMsg.current) return;
-    const interval = setInterval(() => {
-      navigate(locationPath, {});
-      flashMsg.current = null;
-      if (!flashMsg.current) clearInterval(interval);
+    if (!locationState) return;
+    setTimeout(() => {
+      navigate(location.pathname, {});
     }, 2000);
   }, []);
 
-  return <p>{flashMsg.current}</p>;
+  return <p>{locationState?.msg}</p>;
 };
 
 export default FlashMessage;
