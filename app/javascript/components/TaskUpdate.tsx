@@ -4,11 +4,9 @@ import { useParams, useNavigate } from "react-router-dom";
 
 const TaskUpdate = () => {
   const { id } = useParams();
-  const {
-    data: { task } = {},
-    loading,
-    error,
-  } = useTaskQuery({ variables: { id: id as string } });
+  const { data: { task } = {} } = useTaskQuery({
+    variables: { id: id as string },
+  });
 
   const navigate = useNavigate();
   const updateRedirect = () => navigate(`/tasks/${id}`);
