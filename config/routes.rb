@@ -6,4 +6,6 @@ Rails.application.routes.draw do
 
   get 'tasks/:id', to: 'tasks#index'
   get 'tasks/:id/edit', to: 'tasks#index'
+
+  get 'signup', to: 'tasks#index'
 end
