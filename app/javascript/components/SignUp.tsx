@@ -1,16 +1,22 @@
+import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useSignUpMutation } from "../graphql/generated";
+import { useNavigate } from "react-router-dom";
+import FlashMessage from "./FlashMessage";
 
 const SignUp = () => {
+  const navigate = useNavigate();
+
   const [signUp] = useSignUpMutation({
     refetchQueries: ["user"],
-    onError: (error) => {
-      console.log("失敗");
-      console.log(error);
+    onError: () => {
+      navigate("/signup", {
+        state: { msg: "ユーザーを作成することができませんでした" },
+      });
       return;
     },
     onCompleted: () => {
-      console.log("成功");
+      navigate("/login", { state: { msg: "ユーザー作成されました" } });
     },
   });
   const [name, setName] = useState("");
@@ -36,6 +42,7 @@ const SignUp = () => {
 
   return (
     <>
+      <FlashMessage />
       <div>
         <input
           value={name}
@@ -68,8 +75,9 @@ const SignUp = () => {
         />
       </div>
       <div>
-        <button onClick={onClickCreateUser}>保存</button>
+        <button onClick={onClickCreateUser}>登録</button>
       </div>
+      <Link to={"/login"}>ログイン</Link>
     </>
   );
 };
