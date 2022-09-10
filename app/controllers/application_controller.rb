@@ -6,6 +6,10 @@ class ApplicationController < ActionController::Base
 
   before_action :set_csrf_token
 
+  def not_authenticated
+    redirect_to login_path
+  end
+
   def set_csrf_token
     cookies['CSRF-TOKEN'] = {
       domain: 'localhost',
