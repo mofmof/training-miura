@@ -13,6 +13,7 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  ISO8601Date: any;
   ISO8601DateTime: any;
 };
 
@@ -105,12 +106,15 @@ export type Task = {
   body?: Maybe<Scalars['String']>;
   createdAt: Scalars['ISO8601DateTime'];
   id: Scalars['ID'];
+  limitAt?: Maybe<Scalars['ISO8601Date']>;
   title: Scalars['String'];
   updatedAt: Scalars['ISO8601DateTime'];
+  userId?: Maybe<Scalars['Int']>;
 };
 
 export type TaskAttributes = {
   body: Scalars['String'];
+  limitAt: Scalars['ISO8601Date'];
   title: Scalars['String'];
 };
 
@@ -182,12 +186,12 @@ export type TaskQueryVariables = Exact<{
 }>;
 
 
-export type TaskQuery = { __typename?: 'Query', task: { __typename?: 'Task', id: string, title: string, body?: string | null } };
+export type TaskQuery = { __typename?: 'Query', task: { __typename?: 'Task', id: string, title: string, body?: string | null, limitAt?: any | null } };
 
 export type TasksQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type TasksQuery = { __typename?: 'Query', tasks: Array<{ __typename?: 'Task', id: string, title: string, body?: string | null }> };
+export type TasksQuery = { __typename?: 'Query', tasks: Array<{ __typename?: 'Task', id: string, title: string, body?: string | null, limitAt?: any | null }> };
 
 
 export const CreateTaskDocument = gql`
@@ -341,6 +345,7 @@ export const TaskDocument = gql`
     id
     title
     body
+    limitAt
   }
 }
     `;
@@ -378,6 +383,7 @@ export const TasksDocument = gql`
     id
     title
     body
+    limitAt
   }
 }
     `;
