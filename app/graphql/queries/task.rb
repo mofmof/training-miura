@@ -5,7 +5,7 @@ module Queries
     type ObjectTypes::Task, null: false
 
     def resolve(id:)
-      ::Task.find(id)
+      context[:current_user].tasks.find(id)
     end
   end
 end

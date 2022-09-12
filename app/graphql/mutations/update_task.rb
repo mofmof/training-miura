@@ -6,7 +6,7 @@ module Mutations
     field :task, ObjectTypes::Task, null: false
 
     def resolve(id:, params:)
-      task = Task.find(id)
+      task = context[:current_user].tasks.find(id)
       task.update!(params.to_h)
 
       { task: }

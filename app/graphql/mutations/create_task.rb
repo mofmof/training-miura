@@ -5,8 +5,8 @@ module Mutations
     field :task, ObjectTypes::Task, null: false
 
     def resolve(params:)
-      task = Task.create(params.to_h)
-      { task: } # {"task" :task}の省略形
+      task = context[:current_user].tasks.create(params.to_h)
+      { task: }
     end
   end
 end
