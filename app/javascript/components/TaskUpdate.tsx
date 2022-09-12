@@ -13,16 +13,21 @@ const TaskUpdate = () => {
   const [updateTask] = useUpdateTaskMutation();
   const [title, setTitle] = useState(task?.title);
   const [body, setBody] = useState(task?.body);
+  const [limitAt, setLimitAt] = useState(task?.limitAt);
   const [titleVlidateBoolean, setTitleVlidateBoolean] = useState(false);
   const titleVlidateMessage = "タイトルが未入力です";
-  const titleValidate = () => {
+  const titleValidate = async () => {
     if (title === "") {
       setTitleVlidateBoolean(true);
     } else {
-      updateTask({
+      await updateTask({
         variables: {
           id: task?.id as string,
-          params: { title: title as string, body: body as string },
+          params: {
+            title: title as string,
+            body: body as string,
+            limitAt: limitAt as Date,
+          },
         },
       });
       updateRedirect();
@@ -38,6 +43,13 @@ const TaskUpdate = () => {
         <textarea
           value={body as string}
           onChange={(e) => setBody(e.target.value)}
+        />
+      </div>
+      <div>
+        <input
+          type="date"
+          value={limitAt}
+          onChange={(e) => setLimitAt(e.target.value)}
         />
       </div>
       <div>
