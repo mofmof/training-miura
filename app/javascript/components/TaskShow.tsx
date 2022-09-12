@@ -13,7 +13,7 @@ const TaskShow = () => {
     data: { task } = {},
   } = useTaskQuery({ variables: { id: id as string } });
   if (loading) return <p>Loading...</p>;
-  if (error) return <p>`Error! ${error.message}`;</p>;
+  if (error) return <p>Not found</p>;
   if (!task) return <p>Not found</p>;
   return (
     <div>
