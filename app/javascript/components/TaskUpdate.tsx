@@ -16,11 +16,11 @@ const TaskUpdate = () => {
   const [limitAt, setLimitAt] = useState(task?.limitAt);
   const [titleVlidateBoolean, setTitleVlidateBoolean] = useState(false);
   const titleVlidateMessage = "タイトルが未入力です";
-  const titleValidate = async () => {
+  const titleValidate = () => {
     if (title === "") {
       setTitleVlidateBoolean(true);
     } else {
-      await updateTask({
+      updateTask({
         variables: {
           id: task?.id as string,
           params: {

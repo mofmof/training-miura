@@ -179,7 +179,7 @@ export type UpdateTaskMutationVariables = Exact<{
 }>;
 
 
-export type UpdateTaskMutation = { __typename?: 'Mutation', updateTask?: { __typename?: 'UpdateTaskPayload', task: { __typename?: 'Task', id: string, title: string, body?: string | null } } | null };
+export type UpdateTaskMutation = { __typename?: 'Mutation', updateTask?: { __typename?: 'UpdateTaskPayload', task: { __typename?: 'Task', id: string, title: string, body?: string | null, limitAt?: any | null } } | null };
 
 export type TaskQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -308,6 +308,7 @@ export const UpdateTaskDocument = gql`
       id
       title
       body
+      limitAt
     }
   }
 }
