@@ -107,6 +107,7 @@ export type Task = {
   createdAt: Scalars['ISO8601DateTime'];
   id: Scalars['ID'];
   limitAt?: Maybe<Scalars['ISO8601Date']>;
+  state?: Maybe<Scalars['Int']>;
   title: Scalars['String'];
   updatedAt: Scalars['ISO8601DateTime'];
   userId?: Maybe<Scalars['Int']>;
@@ -115,6 +116,7 @@ export type Task = {
 export type TaskAttributes = {
   body: Scalars['String'];
   limitAt: Scalars['ISO8601Date'];
+  state: Scalars['Int'];
   title: Scalars['String'];
 };
 
@@ -179,19 +181,19 @@ export type UpdateTaskMutationVariables = Exact<{
 }>;
 
 
-export type UpdateTaskMutation = { __typename?: 'Mutation', updateTask?: { __typename?: 'UpdateTaskPayload', task: { __typename?: 'Task', id: string, title: string, body?: string | null, limitAt?: any | null } } | null };
+export type UpdateTaskMutation = { __typename?: 'Mutation', updateTask?: { __typename?: 'UpdateTaskPayload', task: { __typename?: 'Task', id: string, title: string, body?: string | null, limitAt?: any | null, state?: number | null } } | null };
 
 export type TaskQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
-export type TaskQuery = { __typename?: 'Query', task: { __typename?: 'Task', id: string, title: string, body?: string | null, limitAt?: any | null } };
+export type TaskQuery = { __typename?: 'Query', task: { __typename?: 'Task', id: string, title: string, body?: string | null, state?: number | null, limitAt?: any | null } };
 
 export type TasksQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type TasksQuery = { __typename?: 'Query', tasks: Array<{ __typename?: 'Task', id: string, title: string, body?: string | null, limitAt?: any | null }> };
+export type TasksQuery = { __typename?: 'Query', tasks: Array<{ __typename?: 'Task', id: string, title: string, body?: string | null, state?: number | null, limitAt?: any | null }> };
 
 
 export const CreateTaskDocument = gql`
@@ -309,6 +311,7 @@ export const UpdateTaskDocument = gql`
       title
       body
       limitAt
+      state
     }
   }
 }
@@ -346,6 +349,7 @@ export const TaskDocument = gql`
     id
     title
     body
+    state
     limitAt
   }
 }
@@ -384,6 +388,7 @@ export const TasksDocument = gql`
     id
     title
     body
+    state
     limitAt
   }
 }

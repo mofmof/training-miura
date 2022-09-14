@@ -8,6 +8,7 @@ export default gql`
         title
         body
         limitAt
+        state
       }
     }
   }
