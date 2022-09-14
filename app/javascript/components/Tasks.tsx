@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useTasksQuery } from "../graphql/generated";
+import { TaskStateLabel } from "./Enum";
 
 const Tasks = () => {
   const { data: { tasks = [] } = {} } = useTasksQuery();
@@ -39,7 +40,7 @@ const Tasks = () => {
         {tasks.map((task) => (
           <li key={task.id}>
             <Link to={`/tasks/${task.id}`}>
-              {task.title}-{task.limitAt}
+              {TaskStateLabel(task.state as any)}-{task.title}-{task.limitAt}
               {diffLimitAt(task.limitAt)}
             </Link>
           </li>

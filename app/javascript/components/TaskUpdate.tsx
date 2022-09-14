@@ -1,6 +1,7 @@
 import { useUpdateTaskMutation, useTaskQuery } from "../graphql/generated";
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { TaskStateLabel, TaskState } from "./Enum";
 
 const TaskUpdate = () => {
   const { id } = useParams();
@@ -14,6 +15,7 @@ const TaskUpdate = () => {
   const [title, setTitle] = useState(task?.title);
   const [body, setBody] = useState(task?.body);
   const [limitAt, setLimitAt] = useState(task?.limitAt);
+  const [state, setState] = useState(task?.state);
   const [titleVlidateBoolean, setTitleVlidateBoolean] = useState(false);
   const titleVlidateMessage = "タイトルが未入力です";
   const titleValidate = () => {
@@ -27,6 +29,7 @@ const TaskUpdate = () => {
             title: title as string,
             body: body as string,
             limitAt: limitAt as Date,
+            state: state as number,
           },
         },
       });
@@ -51,6 +54,29 @@ const TaskUpdate = () => {
           value={limitAt}
           onChange={(e) => setLimitAt(e.target.value)}
         />
+      </div>
+      <div>
+        <input
+          type="radio"
+          value={TaskState.unstarted}
+          name="taskstate"
+          onChange={(e) => setState(e.target.value as any)}
+        />
+        {TaskStateLabel(TaskState.unstarted)}
+        <input
+          type="radio"
+          value={TaskState.started}
+          name="taskstate"
+          onChange={(e) => setState(e.target.value as any)}
+        />
+        {TaskStateLabel(TaskState.started)}
+        <input
+          type="radio"
+          value={TaskState.finished}
+          name="taskstate"
+          onChange={(e) => setState(e.target.value as any)}
+        />
+        {TaskStateLabel(TaskState.finished)}
       </div>
       <div>
         <button onClick={titleValidate}>更新</button>
