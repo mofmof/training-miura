@@ -10,9 +10,17 @@ class ApplicationController < ActionController::Base
     redirect_to login_path
   end
 
+  def domain(rails_env)
+    if rails_env == 'development'
+      return 'localhost'
+    elsif rails_env == 'production'
+      return 'https://traning-miura.herokuapp.com/'
+    end
+  end
+
   def set_csrf_token
     cookies['CSRF-TOKEN'] = {
-      domain: 'localhost',
+      domain: domain(ENV['RAILS_ENV']),
       value: form_authenticity_token
     }
   end
