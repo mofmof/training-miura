@@ -7,7 +7,7 @@ export default gql`
         id
         title
         body
-        limitAt
+        limitOn
       }
     }
   }

@@ -17,10 +17,10 @@ const InputTask = () => {
   });
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
-  const [limitAt, setLimitAt] = useState("");
+  const [limitOn, setLimitAt] = useState("");
   const onClickCreateTask = () => {
     createTask({
-      variables: { params: { title: title, body: body, limitAt: limitAt } },
+      variables: { params: { title: title, body: body, limitOn: limitOn } },
     });
     setTitle("");
     setBody("");
@@ -46,7 +46,7 @@ const InputTask = () => {
       <div>
         <input
           type="date"
-          value={limitAt}
+          value={limitOn}
           onChange={(e) => setLimitAt(e.target.value)}
         />
       </div>

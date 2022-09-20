@@ -21,7 +21,7 @@ const TaskUpdate = () => {
   });
   const [title, setTitle] = useState(task?.title);
   const [body, setBody] = useState(task?.body);
-  const [limitAt, setLimitAt] = useState(task?.limitAt);
+  const [limitOn, setLimitAt] = useState(task?.limitOn);
   const onClickUpdateTask = () => {
     updateTask({
       variables: {
@@ -29,7 +29,7 @@ const TaskUpdate = () => {
         params: {
           title: title as string,
           body: body as string,
-          limitAt: limitAt as Date,
+          limitOn: limitOn as Date,
         },
       },
     });
@@ -49,7 +49,7 @@ const TaskUpdate = () => {
       <div>
         <input
           type="date"
-          value={limitAt}
+          value={limitOn}
           onChange={(e) => setLimitAt(e.target.value)}
         />
       </div>

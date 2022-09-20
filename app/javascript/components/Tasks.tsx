@@ -10,7 +10,7 @@ const Tasks = () => {
         {tasks.map((task) => (
           <li key={task.id}>
             <Link to={`/tasks/${task.id}`}>
-              {task.title}-{task.limitAt}
+              {task.title}-{task.limitOn}
             </Link>
           </li>
         ))}
