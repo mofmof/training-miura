@@ -17,10 +17,14 @@ const InputTask = () => {
   });
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
+  const [limitOn, setLimitAt] = useState("");
   const onClickCreateTask = () => {
-    createTask({ variables: { params: { title: title, body: body } } });
+    createTask({
+      variables: { params: { title: title, body: body, limitOn: limitOn } },
+    });
     setTitle("");
     setBody("");
+    setLimitAt("");
   };
   return (
     <>
@@ -37,6 +41,13 @@ const InputTask = () => {
           value={body}
           placeholder="内容を入力"
           onChange={(e) => setBody(e.target.value)}
+        />
+      </div>
+      <div>
+        <input
+          type="date"
+          value={limitOn}
+          onChange={(e) => setLimitAt(e.target.value)}
         />
       </div>
       <div>

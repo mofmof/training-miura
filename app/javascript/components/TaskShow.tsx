@@ -21,6 +21,7 @@ const TaskShow = () => {
       <p>{task.id}</p>
       <p>{task.title}</p>
       <p style={{ whiteSpace: "pre-line" }}>{task.body}</p>
+      <p>{task.limitOn ? task.limitOn : "期限未登録"}</p>
       <button onClick={onClickTaskShow}>編集</button>
       <TaskDelete id={task.id} />
     </div>
