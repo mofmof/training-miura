@@ -1,5 +1,9 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
+import { setContext } from "@apollo/client/link/context";
+import Cookie from "js-cookie";
+import axios from "../../lib/axios";
+
 import App from "./App";
 import {
   ApolloClient,
@@ -11,14 +15,25 @@ import {
 const container = document.getElementById("root") as HTMLElement;
 const root = createRoot(container);
 
-const link = createHttpLink({
+// CSRFトークンをフロント側にセット
+axios.get("/");
+
+const authLink = setContext((_, { headers }) => {
+  return {
+    headers: {
+      ...headers,
+      "X-CSRF-Token": Cookie.get("CSRF-TOKEN"),
+    },
+  };
+});
+
+const httpLink = createHttpLink({
   uri: "/graphql",
-  credentials: "include",
 });
 
 const client = new ApolloClient({
   cache: new InMemoryCache(),
-  link: link,
+  link: authLink.concat(httpLink),
 });
 
 document.addEventListener("DOMContentLoaded", () => {
