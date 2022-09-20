@@ -14,7 +14,9 @@ import {
 
 const container = document.getElementById("root") as HTMLElement;
 const root = createRoot(container);
-axios.get("/login");
+
+// CSRFトークンをフロント側にセット
+axios.get("/");
 
 const authLink = setContext((_, { headers }) => {
   return {
