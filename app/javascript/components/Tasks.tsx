@@ -11,9 +11,9 @@ const Tasks = () => {
     return `${y + "-" + m + "-" + d}`;
   };
 
-  const diffLimitAt = (limitAt: any) => {
-    if (!limitAt) return;
-    const LimitAtParse: Date = new Date(limitAt);
+  const diffLimitAt = (limitOn: any) => {
+    if (!limitOn) return;
+    const LimitAtParse: Date = new Date(limitOn);
     const today: Date = new Date(formatDate(new Date()));
     const diffDay: number = Math.floor(
       (LimitAtParse.getTime() - today.getTime()) / 86400000
@@ -39,12 +39,8 @@ const Tasks = () => {
         {tasks.map((task) => (
           <li key={task.id}>
             <Link to={`/tasks/${task.id}`}>
-<<<<<<< HEAD
-              {task.title}-{task.limitAt}
-              {diffLimitAt(task.limitAt)}
-=======
               {task.title}-{task.limitOn}
->>>>>>> 98bff2b84c98e68ba5ccc8474a7ec99097da7d88
+              {diffLimitAt(task.limitOn)}
             </Link>
           </li>
         ))}
