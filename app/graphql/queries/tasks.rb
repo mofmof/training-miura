@@ -3,7 +3,8 @@ module Queries
     type [ObjectTypes::Task], null: false
 
     def resolve
-      context[:current_user].tasks.order(limit_at: :desc)
+      login_required!
+      context[:current_user].tasks.order(created_at: :desc)
     end
   end
 end

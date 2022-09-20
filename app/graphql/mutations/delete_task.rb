@@ -1,5 +1,5 @@
 module Mutations
-  class DeleteTask < Mutations::BaseMutation
+  class DeleteTask < LoginRequiredMutation
     argument :id, ID, required: true
 
     field :id, ID, null: false
