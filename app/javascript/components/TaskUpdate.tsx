@@ -3,35 +3,36 @@ import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
 const TaskUpdate = () => {
+  const [messages, setMessages] = useState("");
   const { id } = useParams();
   const { data: { task } = {} } = useTaskQuery({
     variables: { id: id as string },
   });
 
   const navigate = useNavigate();
-  const updateRedirect = () => navigate(`/tasks/${id}`);
-  const [updateTask] = useUpdateTaskMutation();
+  const [updateTask] = useUpdateTaskMutation({
+    onError: (e) => {
+      setMessages(e.message);
+      return;
+    },
+    onCompleted: () => {
+      navigate(`/tasks/${id}`, { state: { msg: "タスクが更新されました" } });
+    },
+  });
   const [title, setTitle] = useState(task?.title);
   const [body, setBody] = useState(task?.body);
-  const [titleVlidateBoolean, setTitleVlidateBoolean] = useState(false);
-  const titleVlidateMessage = "タイトルが未入力です";
-  const titleValidate = () => {
-    if (title === "") {
-      setTitleVlidateBoolean(true);
-    } else {
-      updateTask({
-        variables: {
-          id: task?.id as string,
-          params: { title: title as string, body: body as string },
-        },
-      });
-      updateRedirect();
-    }
+  const onClickUpdateTask = () => {
+    updateTask({
+      variables: {
+        id: task?.id as string,
+        params: { title: title as string, body: body as string },
+      },
+    });
   };
   return (
     <>
+      <p style={{ whiteSpace: "pre-line" }}>{messages}</p>
       <div>
-        <p>{titleVlidateBoolean && titleVlidateMessage}</p>
         <input value={title} onChange={(e) => setTitle(e.target.value)} />
       </div>
       <div>
@@ -41,7 +42,7 @@ const TaskUpdate = () => {
         />
       </div>
       <div>
-        <button onClick={titleValidate}>更新</button>
+        <button onClick={onClickUpdateTask}>更新</button>
       </div>
     </>
   );

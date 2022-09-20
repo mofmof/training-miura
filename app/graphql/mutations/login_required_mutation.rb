@@ -1,7 +1,9 @@
-module Queries
-  class BaseQuery < GraphQL::Schema::Resolver
-    def login_required!
+module Mutations
+  class LoginRequiredMutation < BaseMutation
+    def authorized?(_args)
       raise GraphQL::ExecutionError, 'login required!!' unless context[:current_user]
+
+      true
     end
   end
 end
