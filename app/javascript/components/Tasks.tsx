@@ -39,8 +39,12 @@ const Tasks = () => {
         {tasks.map((task) => (
           <li key={task.id}>
             <Link to={`/tasks/${task.id}`}>
+<<<<<<< HEAD
               {task.title}-{task.limitAt}
               {diffLimitAt(task.limitAt)}
+=======
+              {task.title}-{task.limitOn}
+>>>>>>> 98bff2b84c98e68ba5ccc8474a7ec99097da7d88
             </Link>
           </li>
         ))}

@@ -6,13 +6,12 @@ import FlashMessage from "./FlashMessage";
 
 const SignUp = () => {
   const navigate = useNavigate();
+  const [messages, setMessages] = useState("");
 
   const [signUp] = useSignUpMutation({
     refetchQueries: ["user"],
-    onError: () => {
-      navigate("/signup", {
-        state: { msg: "ユーザーを作成することができませんでした" },
-      });
+    onError: (e) => {
+      setMessages(e.message);
       return;
     },
     onCompleted: () => {
@@ -43,6 +42,7 @@ const SignUp = () => {
   return (
     <>
       <FlashMessage />
+      <p style={{ whiteSpace: "pre-line" }}>{messages}</p>
       <div>
         <input
           value={name}

@@ -1,5 +1,5 @@
 module Mutations
-  class UpdateTask < Mutations::BaseMutation
+  class UpdateTask < LoginRequiredMutation
     argument :id, ID, required: true
     argument :params, InputTypes::Task, required: true
 
@@ -7,11 +7,11 @@ module Mutations
 
     def resolve(id:, params:)
       task = context[:current_user].tasks.find(id)
-      task.update!(params.to_h)
-
-      { task: }
-    rescue StandardError => e
-      GraphQL::ExecutionError.new(e.message)
+      if task.update(params.to_h)
+        { task: }
+      else
+        raise GraphQL::ExecutionError, task.errors.full_messages.join("\n")
+      end
     end
   end
 end

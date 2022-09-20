@@ -1,29 +1,35 @@
 import { useCreateTaskMutation } from "../graphql/generated";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const InputTask = () => {
-  const [createTask] = useCreateTaskMutation({ refetchQueries: ["tasks"] });
+  const navigate = useNavigate();
+  const [messages, setMessages] = useState("");
+  const [createTask] = useCreateTaskMutation({
+    refetchQueries: ["tasks"],
+    onError: (e) => {
+      setMessages(e.message);
+      return;
+    },
+    onCompleted: () => {
+      navigate("/", { state: { msg: "タスクが作成されました" } });
+    },
+  });
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
-  const [limitAt, setLimitAt] = useState("");
-  const [titleVlidateBoolean, setTitleVlidateBoolean] = useState(false);
-  const titleVlidateMessage = "タイトルが未入力です";
-  const titleValidate = () => {
-    if (title === "") {
-      setTitleVlidateBoolean(true);
-    } else {
-      createTask({
-        variables: { params: { title: title, body: body, limitAt: limitAt } },
-      });
-      setTitle("");
-      setBody("");
-      setLimitAt("");
-    }
+  const [limitOn, setLimitAt] = useState("");
+  const onClickCreateTask = () => {
+    createTask({
+      variables: { params: { title: title, body: body, limitOn: limitOn } },
+    });
+    setTitle("");
+    setBody("");
+    setLimitAt("");
   };
   return (
     <>
+      <p style={{ whiteSpace: "pre-line" }}>{messages}</p>
       <div>
-        <p>{titleVlidateBoolean && titleVlidateMessage}</p>
         <input
           value={title}
           placeholder="タイトルを入力"
@@ -40,12 +46,12 @@ const InputTask = () => {
       <div>
         <input
           type="date"
-          value={limitAt}
+          value={limitOn}
           onChange={(e) => setLimitAt(e.target.value)}
         />
       </div>
       <div>
-        <button onClick={titleValidate}>保存</button>
+        <button onClick={onClickCreateTask}>保存</button>
       </div>
     </>
   );

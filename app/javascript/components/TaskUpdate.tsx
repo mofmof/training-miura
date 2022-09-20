@@ -1,42 +1,51 @@
-import { useUpdateTaskMutation, useTaskQuery } from "../graphql/generated";
-import { useState } from "react";
+import { useUpdateTaskMutation } from "../graphql/generated";
+import { FC, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
-const TaskUpdate = () => {
+type Props = {
+  task: {
+    __typename?: "Task" | undefined;
+    id: string;
+    title: string;
+    body?: string | null | undefined;
+    limitOn?: any;
+  };
+};
+
+const TaskUpdate: FC<Props> = (props) => {
+  const { task } = props;
+  const [messages, setMessages] = useState("");
   const { id } = useParams();
-  const { data: { task } = {} } = useTaskQuery({
-    variables: { id: id as string },
-  });
 
   const navigate = useNavigate();
-  const updateRedirect = () => navigate(`/tasks/${id}`);
-  const [updateTask] = useUpdateTaskMutation();
-  const [title, setTitle] = useState(task?.title);
+  const [updateTask] = useUpdateTaskMutation({
+    onError: (e) => {
+      setMessages(e.message);
+      return;
+    },
+    onCompleted: () => {
+      navigate(`/tasks/${id}`, { state: { msg: "タスクが更新されました" } });
+    },
+  });
+  const [title, setTitle] = useState(task.title);
   const [body, setBody] = useState(task?.body);
-  const [limitAt, setLimitAt] = useState(task?.limitAt);
-  const [titleVlidateBoolean, setTitleVlidateBoolean] = useState(false);
-  const titleVlidateMessage = "タイトルが未入力です";
-  const titleValidate = () => {
-    if (title === "") {
-      setTitleVlidateBoolean(true);
-    } else {
-      updateTask({
-        variables: {
-          id: task?.id as string,
-          params: {
-            title: title as string,
-            body: body as string,
-            limitAt: limitAt as Date,
-          },
+  const [limitOn, setLimitAt] = useState(task?.limitOn);
+  const onClickUpdateTask = () => {
+    updateTask({
+      variables: {
+        id: task.id,
+        params: {
+          title: title,
+          body: body as string,
+          limitOn: limitOn,
         },
-      });
-      updateRedirect();
-    }
+      },
+    });
   };
   return (
     <>
+      <p style={{ whiteSpace: "pre-line" }}>{messages}</p>
       <div>
-        <p>{titleVlidateBoolean && titleVlidateMessage}</p>
         <input value={title} onChange={(e) => setTitle(e.target.value)} />
       </div>
       <div>
@@ -48,12 +57,12 @@ const TaskUpdate = () => {
       <div>
         <input
           type="date"
-          value={limitAt}
+          value={limitOn}
           onChange={(e) => setLimitAt(e.target.value)}
         />
       </div>
       <div>
-        <button onClick={titleValidate}>更新</button>
+        <button onClick={onClickUpdateTask}>更新</button>
       </div>
     </>
   );
