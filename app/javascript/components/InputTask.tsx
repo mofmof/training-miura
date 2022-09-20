@@ -1,25 +1,31 @@
 import { useCreateTaskMutation } from "../graphql/generated";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const InputTask = () => {
-  const [createTask] = useCreateTaskMutation({ refetchQueries: ["tasks"] });
+  const navigate = useNavigate();
+  const [messages, setMessages] = useState("");
+  const [createTask] = useCreateTaskMutation({
+    refetchQueries: ["tasks"],
+    onError: (e) => {
+      setMessages(e.message);
+      return;
+    },
+    onCompleted: () => {
+      navigate("/", { state: { msg: "タスクが作成されました" } });
+    },
+  });
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
-  const [titleVlidateBoolean, setTitleVlidateBoolean] = useState(false);
-  const titleVlidateMessage = "タイトルが未入力です";
-  const titleValidate = () => {
-    if (title === "") {
-      setTitleVlidateBoolean(true);
-    } else {
-      createTask({ variables: { params: { title: title, body: body } } });
-      setTitle("");
-      setBody("");
-    }
+  const onClickCreateTask = () => {
+    createTask({ variables: { params: { title: title, body: body } } });
+    setTitle("");
+    setBody("");
   };
   return (
     <>
+      <p style={{ whiteSpace: "pre-line" }}>{messages}</p>
       <div>
-        <p>{titleVlidateBoolean && titleVlidateMessage}</p>
         <input
           value={title}
           placeholder="タイトルを入力"
@@ -34,7 +40,7 @@ const InputTask = () => {
         />
       </div>
       <div>
-        <button onClick={titleValidate}>保存</button>
+        <button onClick={onClickCreateTask}>保存</button>
       </div>
     </>
   );
