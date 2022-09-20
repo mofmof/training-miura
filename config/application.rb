@@ -20,6 +20,8 @@ module Myapp
     # config.eager_load_paths << Rails.root.join("extras")
     config.middleware.use ActionDispatch::Session::CookieStore
 
+    config.autoload_paths += Dir["#{config.root}/lib/**/"]
+
     config.generators do |g|
       g.skip_routes true
       g.assets false
