@@ -7,7 +7,7 @@ module Mutations
     def resolve(params:)
       user = User.new(params.to_h)
       if user.save
-        { user: user }
+        { user: }
       else
         raise GraphQL::ExecutionError, user.errors.full_messages.join("\n")
       end
