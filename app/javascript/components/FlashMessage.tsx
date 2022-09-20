@@ -11,7 +11,7 @@ const FlashMessage = () => {
     setTimeout(() => {
       navigate(location.pathname, {});
     }, 2000);
-  }, []);
+  }, [locationState]);
 
   return <p>{locationState?.msg}</p>;
 };
