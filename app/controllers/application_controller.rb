@@ -2,7 +2,8 @@ class ApplicationController < ActionController::Base
   include ActionController::Cookies
   include ActionController::RequestForgeryProtection
 
-  protect_from_forgery with: :exception
+  # protect_from_forgery with: :exception
+  protect_from_forgery with: :null_session
 
   before_action :set_csrf_token
 

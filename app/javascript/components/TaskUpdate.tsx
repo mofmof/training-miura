@@ -1,4 +1,4 @@
-import { useUpdateTaskMutation } from "../graphql/generated";
+import { TaskStateEnum, useUpdateTaskMutation } from "../graphql/generated";
 import { FC, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { TaskStateLabel, TaskState } from "./Enum";
@@ -9,6 +9,7 @@ type Props = {
     id: string;
     title: string;
     body?: string | null | undefined;
+    state: TaskStateEnum;
     limitOn?: any;
   };
 };
@@ -30,26 +31,8 @@ const TaskUpdate: FC<Props> = (props) => {
   });
   const [title, setTitle] = useState(task.title);
   const [body, setBody] = useState(task?.body);
-<<<<<<< HEAD
-  const [limitAt, setLimitAt] = useState(task?.limitAt);
-  const [state, setState] = useState(task?.state);
-  const [titleVlidateBoolean, setTitleVlidateBoolean] = useState(false);
-  const titleVlidateMessage = "タイトルが未入力です";
-  const titleValidate = () => {
-    if (title === "") {
-      setTitleVlidateBoolean(true);
-    } else {
-      updateTask({
-        variables: {
-          id: task?.id as string,
-          params: {
-            title: title as string,
-            body: body as string,
-            limitAt: limitAt as Date,
-            state: state as number,
-          },
-=======
-  const [limitOn, setLimitAt] = useState(task?.limitOn);
+  const [limitOn, setLimitOn] = useState(task?.limitOn);
+  const [state, setState] = useState(task.state);
   const onClickUpdateTask = () => {
     updateTask({
       variables: {
@@ -58,7 +41,7 @@ const TaskUpdate: FC<Props> = (props) => {
           title: title,
           body: body as string,
           limitOn: limitOn,
->>>>>>> b3bc1ab7ff040b136dc46a7cb41caddaaeedc5e1
+          state: state,
         },
       },
     });
@@ -79,11 +62,10 @@ const TaskUpdate: FC<Props> = (props) => {
         <input
           type="date"
           value={limitOn}
-          onChange={(e) => setLimitAt(e.target.value)}
+          onChange={(e) => setLimitOn(e.target.value)}
         />
       </div>
       <div>
-<<<<<<< HEAD
         <input
           type="radio"
           value={TaskState.unstarted}
@@ -107,10 +89,7 @@ const TaskUpdate: FC<Props> = (props) => {
         {TaskStateLabel(TaskState.finished)}
       </div>
       <div>
-        <button onClick={titleValidate}>更新</button>
-=======
         <button onClick={onClickUpdateTask}>更新</button>
->>>>>>> b3bc1ab7ff040b136dc46a7cb41caddaaeedc5e1
       </div>
     </>
   );

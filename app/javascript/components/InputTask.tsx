@@ -1,4 +1,4 @@
-import { useCreateTaskMutation } from "../graphql/generated";
+import { TaskStateEnum, useCreateTaskMutation } from "../graphql/generated";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -17,14 +17,22 @@ const InputTask = () => {
   });
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
-  const [limitOn, setLimitAt] = useState("");
+  const [limitOn, setLimitOn] = useState("");
+  const state: TaskStateEnum = TaskStateEnum.Unstarted;
   const onClickCreateTask = () => {
     createTask({
-      variables: { params: { title: title, body: body, limitOn: limitOn } },
+      variables: {
+        params: {
+          title: title,
+          body: body,
+          limitOn: limitOn,
+          state: state,
+        },
+      },
     });
     setTitle("");
     setBody("");
-    setLimitAt("");
+    setLimitOn("");
   };
   return (
     <>
@@ -47,7 +55,7 @@ const InputTask = () => {
         <input
           type="date"
           value={limitOn}
-          onChange={(e) => setLimitAt(e.target.value)}
+          onChange={(e) => setLimitOn(e.target.value)}
         />
       </div>
       <div>

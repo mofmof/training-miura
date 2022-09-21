@@ -12,12 +12,12 @@ const Tasks = () => {
     return `${y + "-" + m + "-" + d}`;
   };
 
-  const diffLimitAt = (limitOn: any) => {
-    if (!limitOn) return;
-    const LimitAtParse: Date = new Date(limitOn);
+  const diffLimitOn = (limitOn: any) => {
+    if (limitOn == null) return;
+    const limitOnParse: Date = new Date(limitOn);
     const today: Date = new Date(formatDate(new Date()));
     const diffDay: number = Math.floor(
-      (LimitAtParse.getTime() - today.getTime()) / 86400000
+      (limitOnParse.getTime() - today.getTime()) / 86400000
     );
     const limitMessage = () => {
       if (diffDay > 3 || diffDay == undefined) {
@@ -40,13 +40,9 @@ const Tasks = () => {
         {tasks.map((task) => (
           <li key={task.id}>
             <Link to={`/tasks/${task.id}`}>
-<<<<<<< HEAD
-              {TaskStateLabel(task.state as any)}-{task.title}-{task.limitAt}
-              {diffLimitAt(task.limitAt)}
-=======
-              {task.title}-{task.limitOn}
-              {diffLimitAt(task.limitOn)}
->>>>>>> b3bc1ab7ff040b136dc46a7cb41caddaaeedc5e1
+              {TaskStateLabel(task.state as any)}-{task.title}-
+              {task.limitOn ? task.limitOn : "期限未登録"}
+              {diffLimitOn(task.limitOn)}
             </Link>
           </li>
         ))}
