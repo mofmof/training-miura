@@ -6,5 +6,7 @@ module Types
 
     field :tasks, resolver: Queries::Tasks
     field :task, resolver: Queries::Task
+
+    field :users, resolver: Queries::Users
   end
 end
