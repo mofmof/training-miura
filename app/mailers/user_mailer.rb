@@ -6,4 +6,11 @@ class UserMailer < ApplicationMailer
     subject = "期限が迫っているタスクが#{limit_within_one_day_count}件あります"
     mail(to: params[:to], subject:)
   end
+
+  def send_csv
+    @user = User.find_by(email: params[:to])
+    attachments['タスク一覧.csv'] = params[:file]
+    subject = 'タスク一覧'
+    mail(to: params[:to], subject:)
+  end
 end
