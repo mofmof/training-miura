@@ -1,6 +1,7 @@
-import { useUpdateTaskMutation } from "../graphql/generated";
+import { TaskStateEnum, useUpdateTaskMutation } from "../graphql/generated";
 import { FC, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { TaskStateLabel, TaskState } from "./Enum";
 
 type Props = {
   task: {
@@ -8,6 +9,7 @@ type Props = {
     id: string;
     title: string;
     body?: string | null | undefined;
+    state: TaskStateEnum;
     limitOn?: any;
   };
 };
@@ -29,7 +31,8 @@ const TaskUpdate: FC<Props> = (props) => {
   });
   const [title, setTitle] = useState(task.title);
   const [body, setBody] = useState(task?.body);
-  const [limitOn, setLimitAt] = useState(task?.limitOn);
+  const [limitOn, setLimitOn] = useState(task?.limitOn);
+  const [state, setState] = useState(task.state);
   const onClickUpdateTask = () => {
     updateTask({
       variables: {
@@ -38,6 +41,7 @@ const TaskUpdate: FC<Props> = (props) => {
           title: title,
           body: body as string,
           limitOn: limitOn,
+          state: state,
         },
       },
     });
@@ -58,8 +62,31 @@ const TaskUpdate: FC<Props> = (props) => {
         <input
           type="date"
           value={limitOn}
-          onChange={(e) => setLimitAt(e.target.value)}
+          onChange={(e) => setLimitOn(e.target.value)}
         />
+      </div>
+      <div>
+        <input
+          type="radio"
+          value={TaskState.unstarted}
+          name="taskstate"
+          onChange={(e) => setState(e.target.value as any)}
+        />
+        {TaskStateLabel(TaskState.unstarted)}
+        <input
+          type="radio"
+          value={TaskState.started}
+          name="taskstate"
+          onChange={(e) => setState(e.target.value as any)}
+        />
+        {TaskStateLabel(TaskState.started)}
+        <input
+          type="radio"
+          value={TaskState.finished}
+          name="taskstate"
+          onChange={(e) => setState(e.target.value as any)}
+        />
+        {TaskStateLabel(TaskState.finished)}
       </div>
       <div>
         <button onClick={onClickUpdateTask}>更新</button>

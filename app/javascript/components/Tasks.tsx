@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useTasksQuery } from "../graphql/generated";
+import { TaskStateLabel } from "./Enum";
 
 const Tasks = () => {
   const { data: { tasks = [] } = {} } = useTasksQuery();
@@ -11,12 +12,12 @@ const Tasks = () => {
     return `${y + "-" + m + "-" + d}`;
   };
 
-  const diffLimitAt = (limitOn: any) => {
-    if (!limitOn) return;
-    const LimitAtParse: Date = new Date(limitOn);
+  const diffLimitOn = (limitOn: any) => {
+    if (limitOn == null) return;
+    const limitOnParse: Date = new Date(limitOn);
     const today: Date = new Date(formatDate(new Date()));
     const diffDay: number = Math.floor(
-      (LimitAtParse.getTime() - today.getTime()) / 86400000
+      (limitOnParse.getTime() - today.getTime()) / 86400000
     );
     const limitMessage = () => {
       if (diffDay > 3 || diffDay == undefined) {
@@ -39,8 +40,9 @@ const Tasks = () => {
         {tasks.map((task) => (
           <li key={task.id}>
             <Link to={`/tasks/${task.id}`}>
-              {task.title}-{task.limitOn}
-              {diffLimitAt(task.limitOn)}
+              {TaskStateLabel(task.state as any)}-{task.title}-
+              {task.limitOn ? task.limitOn : "期限未登録"}
+              {diffLimitOn(task.limitOn)}
             </Link>
           </li>
         ))}

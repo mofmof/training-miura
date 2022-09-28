@@ -4,6 +4,7 @@ module InputTypes
 
     argument :title, String, required: true
     argument :body, String, required: true
-    argument :limit_on, GraphQL::Types::ISO8601Date, required: true
+    argument :state, Enum::TaskStateEnum, required: true
+    argument :limit_on, String, required: true
   end
 end
