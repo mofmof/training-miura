@@ -10,7 +10,7 @@ type Props = {
     title: string;
     body?: string | null | undefined;
     state: TaskStateEnum;
-    limitOn?: any;
+    limitOn: string;
   };
 };
 
@@ -30,8 +30,8 @@ const TaskUpdate: FC<Props> = (props) => {
     },
   });
   const [title, setTitle] = useState(task.title);
-  const [body, setBody] = useState(task?.body);
-  const [limitOn, setLimitOn] = useState(task?.limitOn);
+  const [body, setBody] = useState(task.body);
+  const [limitOn, setLimitOn] = useState(task.limitOn ? task.limitOn : "");
   const [state, setState] = useState(task.state);
   const onClickUpdateTask = () => {
     updateTask({
@@ -40,7 +40,7 @@ const TaskUpdate: FC<Props> = (props) => {
         params: {
           title: title,
           body: body as string,
-          limitOn: limitOn,
+          limitOn: limitOn as string,
           state: state,
         },
       },
@@ -70,6 +70,7 @@ const TaskUpdate: FC<Props> = (props) => {
           type="radio"
           value={TaskState.unstarted}
           name="taskstate"
+          defaultChecked={task.state == "unstarted"}
           onChange={(e) => setState(e.target.value as any)}
         />
         {TaskStateLabel(TaskState.unstarted)}
@@ -77,6 +78,7 @@ const TaskUpdate: FC<Props> = (props) => {
           type="radio"
           value={TaskState.started}
           name="taskstate"
+          defaultChecked={task.state == "started"}
           onChange={(e) => setState(e.target.value as any)}
         />
         {TaskStateLabel(TaskState.started)}
@@ -84,6 +86,7 @@ const TaskUpdate: FC<Props> = (props) => {
           type="radio"
           value={TaskState.finished}
           name="taskstate"
+          defaultChecked={task.state == "finished"}
           onChange={(e) => setState(e.target.value as any)}
         />
         {TaskStateLabel(TaskState.finished)}
