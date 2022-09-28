@@ -19,6 +19,7 @@ module Myapp
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
     config.middleware.use ActionDispatch::Session::CookieStore
+    config.active_job.queue_adapter = :sidekiq # アダプター設定
 
     config.generators do |g|
       g.skip_routes true
