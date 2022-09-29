@@ -31,7 +31,7 @@ const TaskUpdate: FC<Props> = (props) => {
   });
   const [title, setTitle] = useState(task.title);
   const [body, setBody] = useState(task.body);
-  const [limitOn, setLimitOn] = useState(task.limitOn ? task.limitOn : "");
+  const [limitOn, setLimitOn] = useState(task.limitOn);
   const [state, setState] = useState(task.state);
   const onClickUpdateTask = () => {
     updateTask({
@@ -39,8 +39,8 @@ const TaskUpdate: FC<Props> = (props) => {
         id: task.id,
         params: {
           title: title,
-          body: body as string,
-          limitOn: limitOn as string,
+          body: body,
+          limitOn: limitOn,
           state: state,
         },
       },
@@ -54,7 +54,7 @@ const TaskUpdate: FC<Props> = (props) => {
       </div>
       <div>
         <textarea
-          value={body as string}
+          value={body ?? ""}
           onChange={(e) => setBody(e.target.value)}
         />
       </div>
@@ -71,7 +71,7 @@ const TaskUpdate: FC<Props> = (props) => {
           value={TaskState.unstarted}
           name="taskstate"
           defaultChecked={task.state == "unstarted"}
-          onChange={(e) => setState(e.target.value as any)}
+          onChange={(e) => setState(e.target.value as TaskStateEnum)}
         />
         {TaskStateLabel(TaskState.unstarted)}
         <input
@@ -79,7 +79,7 @@ const TaskUpdate: FC<Props> = (props) => {
           value={TaskState.started}
           name="taskstate"
           defaultChecked={task.state == "started"}
-          onChange={(e) => setState(e.target.value as any)}
+          onChange={(e) => setState(e.target.value as TaskStateEnum)}
         />
         {TaskStateLabel(TaskState.started)}
         <input
@@ -87,7 +87,7 @@ const TaskUpdate: FC<Props> = (props) => {
           value={TaskState.finished}
           name="taskstate"
           defaultChecked={task.state == "finished"}
-          onChange={(e) => setState(e.target.value as any)}
+          onChange={(e) => setState(e.target.value as TaskStateEnum)}
         />
         {TaskStateLabel(TaskState.finished)}
       </div>

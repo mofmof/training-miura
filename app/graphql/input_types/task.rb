@@ -3,8 +3,8 @@ module InputTypes
     graphql_name 'TaskAttributes' # ObjectTypes::Taskと名前がバッティングしないようにする
 
     argument :title, String, required: true
-    argument :body, String, required: true
+    argument :body, String, required: false
     argument :state, Enum::TaskStateEnum, required: true
-    argument :limit_on, String, required: true
+    argument :limit_on, String, required: false
   end
 end
