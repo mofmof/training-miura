@@ -1,14 +1,15 @@
 class ExportTasksCsvJob < ApplicationJob
   require 'csv'
-  sidekiq_options retry: false
 
   def perform(user_id)
-    user = User.find(user_id)
+    user = User.find_by(id: user_id)
+    return false if user.blank?
+
     tasks = user.tasks
     csv_data = CSV.generate do |csv|
       column_names = %w[ID タイトル 本文 期限 ステータス]
       csv << column_names
-      tasks.each do |task|
+      tasks.find_each do |task|
         column_values = [
           task.id,
           task.title,
