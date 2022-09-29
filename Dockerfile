@@ -16,6 +16,9 @@ RUN apt-get install -y nodejs npm
 RUN npm install n -g
 RUN n 16.17.0
 
+# cronをインストール
+RUN apt-get install -y cron
+
 # Add a script to be executed every time the container starts.
 COPY entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh

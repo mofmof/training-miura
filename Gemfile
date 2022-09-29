@@ -62,6 +62,7 @@ group :development do
   gem 'rubocop-rspec'
 
   gem 'graphiql-rails'
+  gem 'letter_opener_web'
 end
 
 group :test do
@@ -73,3 +74,4 @@ end
 
 gem 'graphql'
 gem 'sorcery'
+gem 'whenever'
