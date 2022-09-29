@@ -9,7 +9,12 @@ const TopPage = () => {
       <FlashMessage />
       <Tasks />
       <InputTask />
-      <Link to={"/logout"}>ログアウト</Link>
+      <div>
+        <Link to={"/csv_export"}>タスクをダウンロード</Link>
+      </div>
+      <div>
+        <Link to={"/logout"}>ログアウト</Link>
+      </div>
     </>
   );
 };
