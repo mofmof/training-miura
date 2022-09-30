@@ -114,8 +114,8 @@ export type Task = {
 };
 
 export type TaskAttributes = {
-  body: Scalars['String'];
-  limitOn: Scalars['ISO8601Date'];
+  body?: InputMaybe<Scalars['String']>;
+  limitOn?: InputMaybe<Scalars['String']>;
   state: TaskStateEnum;
   title: Scalars['String'];
 };
