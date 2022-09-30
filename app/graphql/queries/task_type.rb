@@ -1,5 +1,5 @@
 module Queries
-  class Task < Queries::LoginRequiredArgsQuery
+  class TaskType < Queries::LoginRequiredQuery
     argument :id, ID, required: true
 
     type ObjectTypes::Task, null: false
