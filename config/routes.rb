@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  if Rails.env.development?
+    require 'sidekiq/web'
+    mount Sidekiq::Web => '/sidekiq'
+  end
   mount GraphiQL::Rails::Engine, at: '/graphiql', graphql_path: '/graphql#execute' if Rails.env.development?
   mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env.development?
   post '/graphql', to: 'graphql#execute'
@@ -7,6 +11,7 @@ Rails.application.routes.draw do
 
   get 'tasks/:id', to: 'tasks#index'
   get 'tasks/:id/edit', to: 'tasks#index'
+  get 'csv_export', to: 'tasks#csv_export'
 
   get 'users', to: 'tasks#index'
 
