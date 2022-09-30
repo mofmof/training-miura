@@ -5,6 +5,7 @@ import TaskUpdateParent from "./components/TaskUpdateParent";
 import SignUp from "./components/SignUp";
 import Login from "./components/Login";
 import Logout from "./components/Logout";
+import Users from "./components/Admin/Users";
 
 const App = () => {
   return (
@@ -17,6 +18,9 @@ const App = () => {
           <Route path="signup" element={<SignUp />} />
           <Route path="login" element={<Login />} />
           <Route path="logout" element={<Logout />} />
+
+          {/* 管理者のみ */}
+          <Route path="users" element={<Users />} />
         </Routes>
       </Router>
     </>
