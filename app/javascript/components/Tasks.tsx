@@ -48,13 +48,18 @@ const Tasks = () => {
   return (
     <div>
       <input
+        className="bg-gray-50 border border-gray-300 my-3"
         value={searchInput}
         placeholder="タイトルを検索"
         onChange={(e) => setSearchInput(e.target.value)}
       />
-      <button onClick={taskSearchTitle}>検索</button>
+      <button className="bg-gray-300 border" onClick={taskSearchTitle}>
+        検索
+      </button>
       <div>
-        <button onClick={resetTaskSearch}>全タスク表示</button>
+        <button className="bg-blue-200 border" onClick={resetTaskSearch}>
+          全タスク表示
+        </button>
       </div>
       <ul>
         {tasks.map((task) => (
