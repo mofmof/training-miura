@@ -1,9 +1,20 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useTasksQuery } from "../graphql/generated";
 import { TaskStateLabel } from "./Enum";
 
 const Tasks = () => {
-  const { data: { tasks = [] } = {} } = useTasksQuery();
+  const [searchInput, setSearchInput] = useState("");
+  const [title, setTitle] = useState("");
+  const { data: { tasks = [] } = {} } = useTasksQuery({
+    variables: { title: title },
+  });
+
+  const taskSearchTitle = () => {
+    if (searchInput) setTitle(searchInput);
+  };
+
+  const resetTaskSearch = () => setTitle("");
 
   const formatDate = (date: Date): string => {
     const y: number = date.getFullYear();
@@ -36,6 +47,15 @@ const Tasks = () => {
 
   return (
     <div>
+      <input
+        value={searchInput}
+        placeholder="タイトルを検索"
+        onChange={(e) => setSearchInput(e.target.value)}
+      />
+      <button onClick={taskSearchTitle}>検索</button>
+      <div>
+        <button onClick={resetTaskSearch}>全タスク表示</button>
+      </div>
       <ul>
         {tasks.map((task) => (
           <li key={task.id}>
