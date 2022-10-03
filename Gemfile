@@ -53,6 +53,7 @@ gem 'sidekiq'
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'debug', platforms: %i[mri mingw x64_mingw]
+  gem 'factory_bot_rails'
 end
 
 group :development do
@@ -62,6 +63,8 @@ group :development do
   gem 'rubocop-performance'
   gem 'rubocop-rails'
   gem 'rubocop-rspec'
+
+  gem 'rspec-rails'
 
   gem 'graphiql-rails'
   gem 'letter_opener_web'
