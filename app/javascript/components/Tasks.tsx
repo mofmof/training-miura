@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useTasksQuery } from "../graphql/generated";
 import { TaskStateLabel } from "./Enum";
 
@@ -61,7 +61,6 @@ const Tasks = () => {
       >
         検索
       </button>
-      <br />
       <div>
         <button
           className="bg-blue-200 border rounded-md"
