@@ -7,4 +7,5 @@ class Task < ApplicationRecord
   enum state: { unstarted: 0, started: 10, finished: 20 }
 
   scope :limit_within_one_day, -> { where(limit_on: Time.zone.today..Time.zone.tomorrow) }
+  scope :find_title, ->(title) { where('title LIKE ?', "%#{title}%") }
 end
