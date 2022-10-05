@@ -53,8 +53,3 @@ jobs:
       # - store_artifacts:
           # path: /tmp/test-results
           # destination: test-results
-
-
-# 待ち行列 q構造 redis得意
-# railsからredisは無理　rails sidekiq redis
-# redisは複数
