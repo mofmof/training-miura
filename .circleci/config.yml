@@ -4,12 +4,12 @@ jobs:
     docker:
       - image: 'cimg/ruby:3.1.2'
         environment:
-          - BUNDLE_JOBS: 3 #並列にインストールするgem数? 数字はマシンスペック依存？　数字根拠なし
-          - BUNDLE_RETRY: 3 #ネットやgitへのアクセス失敗時のリトライ数 数字根拠なし
+          - BUNDLE_JOBS: 3
+          - BUNDLE_RETRY: 3
           - BUNDLE_PATH: vendor/bundle
           - BUNDLER_VERSION: 2.23.22
           - RAILS_ENV: test
-      - image: 'cimg/postgres:9.4'
+      - image: 'cimg/postgres:14.5.0'
         environment:
           POSTGRES_USER: postgres
           POSTGRES_DB: myapp_test
@@ -21,7 +21,7 @@ jobs:
       - restore_cache:
           name: Restore Bundle Cache
           keys:
-            - 'myapp-{{ checksum "Gemfile.lock" }}' #なぜ公式はkeysで複数設定できるようにしてる？ qiitaの '-myapp'的なやつは？
+            - 'myapp-{{ checksum "Gemfile.lock" }}'
       - run:
           name: Bundle Install
           command: bundle install
@@ -47,9 +47,8 @@ jobs:
       - run:
           name: run Rspec
           command: bundle exec rspec
-      - store_test_results: #テスト結果を保存
+      - store_test_results:
           path: /tmp/test-results
-      #上記と同じテスト結果保存だが今回は片方だけ。両方メリットあるので実務だと両方設定しそう。
-      # - store_artifacts:
-          # path: /tmp/test-results
-          # destination: test-results
+      - store_artifacts:
+          path: /tmp/test-results
+          destination: test-results
