@@ -63,6 +63,7 @@ group :development do
   gem 'rubocop-rails'
   gem 'rubocop-rspec'
 
+  gem 'bullet'
   gem 'graphiql-rails'
   gem 'letter_opener_web'
 end
