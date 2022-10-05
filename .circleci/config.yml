@@ -1,0 +1,60 @@
+version: 2.1
+jobs:
+  build:
+    docker:
+      - image: 'cimg/ruby:3.1.2'
+        environment:
+          - BUNDLE_JOBS: 3 #並列にインストールするgem数? 数字はマシンスペック依存？　数字根拠なし
+          - BUNDLE_RETRY: 3 #ネットやgitへのアクセス失敗時のリトライ数 数字根拠なし
+          - BUNDLE_PATH: vendor/bundle
+          - BUNDLER_VERSION: 2.23.22
+          - RAILS_ENV: test
+      - image: 'cimg/postgres:9.4'
+        environment:
+          POSTGRES_USER: postgres
+          POSTGRES_DB: myapp_test
+          POSTGRES_PASSWORD: password
+    shell: /bin/bash
+    parallelism: 2
+    steps:
+      - checkout
+      - restore_cache:
+          name: Restore Bundle Cache
+          keys:
+            - 'myapp-{{ checksum "Gemfile.lock" }}' #なぜ公式はkeysで複数設定できるようにしてる？ qiitaの '-myapp'的なやつは？
+      - run:
+          name: Bundle Install
+          command: bundle install
+      - save_cache:
+          name: Save Bundle Cache
+          paths:
+            - ./vendor/bundle
+          key: 'myapp-{{ checksum "Gemfile.lock" }}'
+      - restore_cache:
+          name: Restore Yarn Cache
+          keys:
+            - 'myapp-{{ checksum "Yarn.lock" }}'
+      - run:
+          name: Yarn Install
+          command: yarn install
+      - save_cache:
+          name: Save Yarn Cache
+          paths:
+            - ~/.cache/yarn
+          key: 'myapp-{{ checksum "yarn.lock" }}'
+      - run: 'bundle exec rake db:create'
+      - run: 'bundle exec rake db:schema:load'
+      - run:
+          name: run Rspec
+          command: bundle exec rspec
+      - store_test_results: #テスト結果を保存
+          path: /tmp/test-results
+      #上記と同じテスト結果保存だが今回は片方だけ。両方メリットあるので実務だと両方設定しそう。
+      # - store_artifacts:
+          # path: /tmp/test-results
+          # destination: test-results
+
+
+# 待ち行列 q構造 redis得意
+# railsからredisは無理　rails sidekiq redis
+# redisは複数
