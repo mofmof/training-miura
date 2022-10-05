@@ -33,7 +33,7 @@ jobs:
       - restore_cache:
           name: Restore Yarn Cache
           keys:
-            - 'myapp-{{ checksum "Yarn.lock" }}'
+            - 'myapp-{{ checksum "yarn.lock" }}'
       - run:
           name: Yarn Install
           command: yarn install
