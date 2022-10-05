@@ -4,7 +4,7 @@ module Types
     include GraphQL::Types::Relay::HasNodeField
     include GraphQL::Types::Relay::HasNodesField
 
-    field :tasks, resolver: Queries::Tasks
+    field :tasks, resolver: Queries::TasksType
     field :task, resolver: Queries::TaskType
 
     field :users, resolver: Queries::Users

@@ -59,13 +59,13 @@ end
 group :development do
   gem 'web-console'
 
+  gem 'rspec-rails'
   gem 'rubocop'
   gem 'rubocop-performance'
   gem 'rubocop-rails'
   gem 'rubocop-rspec'
 
-  gem 'rspec-rails'
-
+  gem 'bullet'
   gem 'graphiql-rails'
   gem 'letter_opener_web'
 end
