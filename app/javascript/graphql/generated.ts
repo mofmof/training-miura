@@ -242,10 +242,11 @@ export type TaskQuery = { __typename?: 'Query', task: { __typename?: 'Task', id:
 export type TasksQueryVariables = Exact<{
   title: Scalars['String'];
   first?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']>;
 }>;
 
 
-export type TasksQuery = { __typename?: 'Query', tasks: { __typename?: 'TaskConnection', nodes?: Array<{ __typename?: 'Task', id: string, title: string, body?: string | null, state: TaskStateEnum, limitOn?: any | null } | null> | null } };
+export type TasksQuery = { __typename?: 'Query', tasks: { __typename?: 'TaskConnection', edges?: Array<{ __typename?: 'TaskEdge', cursor: string, node?: { __typename?: 'Task', id: string, title: string, body?: string | null, state: TaskStateEnum, limitOn?: any | null } | null } | null> | null, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor?: string | null, endCursor?: string | null } } };
 
 export type UsersQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -440,14 +441,23 @@ export type TaskQueryHookResult = ReturnType<typeof useTaskQuery>;
 export type TaskLazyQueryHookResult = ReturnType<typeof useTaskLazyQuery>;
 export type TaskQueryResult = Apollo.QueryResult<TaskQuery, TaskQueryVariables>;
 export const TasksDocument = gql`
-    query tasks($title: String!, $first: Int) {
-  tasks(title: $title, first: $first) {
-    nodes {
-      id
-      title
-      body
-      state
-      limitOn
+    query tasks($title: String!, $first: Int, $after: String) {
+  tasks(title: $title, first: $first, after: $after) {
+    edges {
+      cursor
+      node {
+        id
+        title
+        body
+        state
+        limitOn
+      }
+    }
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
     }
   }
 }
@@ -467,6 +477,7 @@ export const TasksDocument = gql`
  *   variables: {
  *      title: // value for 'title'
  *      first: // value for 'first'
+ *      after: // value for 'after'
  *   },
  * });
  */
