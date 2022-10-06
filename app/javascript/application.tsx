@@ -1,4 +1,5 @@
 import React from "react";
+import { relayStylePagination } from "@apollo/client/utilities";
 import { createRoot } from "react-dom/client";
 import { setContext } from "@apollo/client/link/context";
 import Cookie from "js-cookie";
@@ -32,7 +33,15 @@ const httpLink = createHttpLink({
 });
 
 const client = new ApolloClient({
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache({
+    typePolicies: {
+      Query: {
+        fields: {
+          tasks: relayStylePagination(),
+        },
+      },
+    },
+  }),
   link: authLink.concat(httpLink),
 });
 

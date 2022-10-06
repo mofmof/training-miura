@@ -6,17 +6,19 @@ import { TaskStateLabel } from "./Enum";
 const Tasks = () => {
   const [searchInput, setSearchInput] = useState("");
   const [title, setTitle] = useState("");
-  const [after, setAfter] = useState("");
-  const { data: { tasks } = {} } = useTasksQuery({
+  const { data: { tasks } = {}, fetchMore } = useTasksQuery({
     variables: {
       title: title,
       first: 20,
-      after: after,
     },
   });
   const onClickAddPage = () => {
     if (tasks?.pageInfo.hasNextPage) {
-      setAfter(tasks?.pageInfo.endCursor ?? "");
+      fetchMore({
+        variables: {
+          after: tasks.pageInfo.endCursor,
+        },
+      });
     }
   };
 
