@@ -75,10 +75,23 @@ export type MutationUpdateTaskArgs = {
   input: UpdateTaskInput;
 };
 
+/** Information about pagination in a connection. */
+export type PageInfo = {
+  __typename?: 'PageInfo';
+  /** When paginating forwards, the cursor to continue. */
+  endCursor?: Maybe<Scalars['String']>;
+  /** When paginating forwards, are there more items? */
+  hasNextPage: Scalars['Boolean'];
+  /** When paginating backwards, are there more items? */
+  hasPreviousPage: Scalars['Boolean'];
+  /** When paginating backwards, the cursor to continue. */
+  startCursor?: Maybe<Scalars['String']>;
+};
+
 export type Query = {
   __typename?: 'Query';
   task: Task;
-  tasks: Array<Task>;
+  tasks: TaskConnection;
   users: Array<User>;
 };
 
@@ -89,6 +102,10 @@ export type QueryTaskArgs = {
 
 
 export type QueryTasksArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
   title: Scalars['String'];
 };
 
@@ -124,6 +141,26 @@ export type TaskAttributes = {
   limitOn?: InputMaybe<Scalars['String']>;
   state: TaskStateEnum;
   title: Scalars['String'];
+};
+
+/** The connection type for Task. */
+export type TaskConnection = {
+  __typename?: 'TaskConnection';
+  /** A list of edges. */
+  edges?: Maybe<Array<Maybe<TaskEdge>>>;
+  /** A list of nodes. */
+  nodes?: Maybe<Array<Maybe<Task>>>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+};
+
+/** An edge in a connection. */
+export type TaskEdge = {
+  __typename?: 'TaskEdge';
+  /** A cursor for use in pagination. */
+  cursor: Scalars['String'];
+  /** The item at the end of the edge. */
+  node?: Maybe<Task>;
 };
 
 export enum TaskStateEnum {
@@ -204,10 +241,11 @@ export type TaskQuery = { __typename?: 'Query', task: { __typename?: 'Task', id:
 
 export type TasksQueryVariables = Exact<{
   title: Scalars['String'];
+  first?: InputMaybe<Scalars['Int']>;
 }>;
 
 
-export type TasksQuery = { __typename?: 'Query', tasks: Array<{ __typename?: 'Task', id: string, title: string, body?: string | null, state: TaskStateEnum, limitOn?: any | null }> };
+export type TasksQuery = { __typename?: 'Query', tasks: { __typename?: 'TaskConnection', nodes?: Array<{ __typename?: 'Task', id: string, title: string, body?: string | null, state: TaskStateEnum, limitOn?: any | null } | null> | null } };
 
 export type UsersQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -402,13 +440,15 @@ export type TaskQueryHookResult = ReturnType<typeof useTaskQuery>;
 export type TaskLazyQueryHookResult = ReturnType<typeof useTaskLazyQuery>;
 export type TaskQueryResult = Apollo.QueryResult<TaskQuery, TaskQueryVariables>;
 export const TasksDocument = gql`
-    query tasks($title: String!) {
-  tasks(title: $title) {
-    id
-    title
-    body
-    state
-    limitOn
+    query tasks($title: String!, $first: Int) {
+  tasks(title: $title, first: $first) {
+    nodes {
+      id
+      title
+      body
+      state
+      limitOn
+    }
   }
 }
     `;
@@ -426,6 +466,7 @@ export const TasksDocument = gql`
  * const { data, loading, error } = useTasksQuery({
  *   variables: {
  *      title: // value for 'title'
+ *      first: // value for 'first'
  *   },
  * });
  */
