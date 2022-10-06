@@ -13,15 +13,3 @@ export default gql`
     }
   }
 `;
-
-// export default gql`
-//   query tasks($title: String!, $first: Int) {
-//     tasks(title: $title, first: $first) {
-//       id
-//       title
-//       body
-//       state
-//       limitOn
-//     }
-//   }
-// `;
