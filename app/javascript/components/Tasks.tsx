@@ -84,9 +84,9 @@ const Tasks = () => {
           </li>
         ))}
       </ul>
-      <button onClick={onClickAddPage}>
-        {tasks?.pageInfo.hasNextPage && "もっとみる"}
-      </button>
+      {tasks?.pageInfo.hasNextPage && (
+        <button onClick={onClickAddPage}>もっとみる</button>
+      )}
     </div>
   );
 };
