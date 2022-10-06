@@ -42,8 +42,12 @@ jobs:
           paths:
             - ~/.cache/yarn
           key: 'myapp-{{ checksum "yarn.lock" }}'
-      - run: 'bin/rails db:create'
-      - run: 'bin/rails db:schema:load'
+      - run:
+          name: DB Ceate
+          command: bin/rails db:create
+      - run:
+          name: DB Migrate
+          command: bin/rails db:schema:load
       - run:
           name: run Rspec
           command: bundle exec rspec
