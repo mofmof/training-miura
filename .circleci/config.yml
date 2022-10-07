@@ -1,0 +1,58 @@
+version: 2.1
+jobs:
+  build:
+    docker:
+      - image: 'cimg/ruby:3.1.2-node'
+        environment:
+          - BUNDLE_JOBS: 3
+          - BUNDLE_RETRY: 3
+          - BUNDLE_PATH: vendor/bundle
+          - BUNDLER_VERSION: 2.23.22
+          - RAILS_ENV: test
+      - image: 'cimg/postgres:14.5-postgis'
+        environment:
+          POSTGRES_USER: postgres
+          POSTGRES_DB: myapp_test
+          POSTGRES_PASSWORD: password
+    shell: /bin/bash
+    parallelism: 2
+    steps:
+      - checkout
+      - restore_cache:
+          name: Restore Bundle Cache
+          keys:
+            - 'myapp-{{ checksum "Gemfile.lock" }}'
+      - run:
+          name: Bundle Install
+          command: bundle install
+      - save_cache:
+          name: Save Bundle Cache
+          paths:
+            - ./vendor/bundle
+          key: 'myapp-{{ checksum "Gemfile.lock" }}'
+      - restore_cache:
+          name: Restore Yarn Cache
+          keys:
+            - 'myapp-{{ checksum "yarn.lock" }}'
+      - run:
+          name: Yarn Install
+          command: yarn install
+      - save_cache:
+          name: Save Yarn Cache
+          paths:
+            - ~/.cache/yarn
+          key: 'myapp-{{ checksum "yarn.lock" }}'
+      - run:
+          name: DB Ceate
+          command: bin/rails db:create
+      - run:
+          name: DB Migrate
+          command: bin/rails db:schema:load
+      - run:
+          name: run Rspec
+          command: bundle exec rspec
+      - store_test_results:
+          path: /tmp/test-results
+      - store_artifacts:
+          path: /tmp/test-results
+          destination: test-results
