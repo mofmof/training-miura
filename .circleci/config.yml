@@ -17,8 +17,6 @@ jobs:
     shell: /bin/bash
     parallelism: 2
     steps:
-      - run: |
-          docker run --name some-postgres -e POSTGRES_PASSWORD=password -d postgres
       - checkout
       - restore_cache:
           name: Restore Bundle Cache
