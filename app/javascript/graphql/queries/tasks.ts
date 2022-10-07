@@ -1,13 +1,24 @@
 import { gql } from "@apollo/client";
 
 export default gql`
-  query tasks($title: String!) {
-    tasks(title: $title) {
-      id
-      title
-      body
-      state
-      limitOn
+  query tasks($title: String!, $first: Int, $after: String) {
+    tasks(title: $title, first: $first, after: $after) {
+      edges {
+        cursor
+        node {
+          id
+          title
+          body
+          state
+          limitOn
+        }
+      }
+      pageInfo {
+        hasPreviousPage
+        hasNextPage
+        startCursor
+        endCursor
+      }
     }
   }
 `;

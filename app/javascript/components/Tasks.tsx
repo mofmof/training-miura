@@ -6,9 +6,21 @@ import { TaskStateLabel } from "./Enum";
 const Tasks = () => {
   const [searchInput, setSearchInput] = useState("");
   const [title, setTitle] = useState("");
-  const { data: { tasks = [] } = {} } = useTasksQuery({
-    variables: { title: title },
+  const { data: { tasks } = {}, fetchMore } = useTasksQuery({
+    variables: {
+      title: title,
+      first: 20,
+    },
   });
+  const onClickAddPage = () => {
+    if (tasks?.pageInfo.hasNextPage) {
+      fetchMore({
+        variables: {
+          after: tasks.pageInfo.endCursor,
+        },
+      });
+    }
+  };
 
   const taskSearchTitle = () => {
     if (searchInput) setTitle(searchInput);
@@ -62,16 +74,19 @@ const Tasks = () => {
         </button>
       </div>
       <ul>
-        {tasks.map((task) => (
-          <li key={task.id}>
-            <Link to={`/tasks/${task.id}`}>
-              {TaskStateLabel(task.state as any)}-{task.title}-
-              {task.limitOn ? task.limitOn : "期限未登録"}
-              {diffLimitOn(task.limitOn)}
+        {tasks?.edges?.map((task) => (
+          <li key={task?.node?.id}>
+            <Link to={`/tasks/${task?.node?.id}`}>
+              {TaskStateLabel(task?.node?.state as any)}-{task?.node?.title}-
+              {task?.node?.limitOn ? task?.node?.limitOn : "期限未登録"}
+              {diffLimitOn(task?.node?.limitOn)}
             </Link>
           </li>
         ))}
       </ul>
+      {tasks?.pageInfo.hasNextPage && (
+        <button onClick={onClickAddPage}>もっとみる</button>
+      )}
     </div>
   );
 };
