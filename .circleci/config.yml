@@ -17,7 +17,7 @@ jobs:
     shell: /bin/bash
     parallelism: 2
     steps:
-      - run |
+      - run: |
           docker run -e POSTGRES_PASSWORD=password
       - checkout
       - restore_cache:
