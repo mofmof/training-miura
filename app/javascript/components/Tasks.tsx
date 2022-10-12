@@ -1,16 +1,19 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useTasksQuery } from "../graphql/generated";
-import { TaskStateLabel } from "./Enum";
+import { TaskStateLabel, TaskState } from "./Enum";
 
 const Tasks = () => {
-  const [searchInput, setSearchInput] = useState("");
+  const [searchTitle, setSearchTitle] = useState("");
+  const [searchState, setSearchState] = useState("");
   const [title, setTitle] = useState("");
+  const [state, setState] = useState("");
   const { data: { tasks } = {}, fetchMore } = useTasksQuery({
     fetchPolicy: "cache-and-network",
     variables: {
       title: title,
       first: 20,
+      state: state,
     },
   });
   const onClickAddPage = () => {
@@ -23,8 +26,9 @@ const Tasks = () => {
     }
   };
 
-  const taskSearchTitle = () => {
-    if (searchInput) setTitle(searchInput);
+  const taskSearch = () => {
+    if (searchTitle) setTitle(searchTitle);
+    if (searchState) setState(searchState);
   };
 
   const resetTaskSearch = () => setTitle("");
@@ -62,11 +66,26 @@ const Tasks = () => {
     <div>
       <input
         className="bg-gray-50 border border-gray-300 my-3"
-        value={searchInput}
+        value={searchTitle}
         placeholder="タイトルを検索"
-        onChange={(e) => setSearchInput(e.target.value)}
+        onChange={(e) => setSearchTitle(e.target.value)}
       />
-      <button className="bg-gray-300 border" onClick={taskSearchTitle}>
+      <select
+        value={searchState}
+        onChange={(e) => setSearchState(e.target.value)}
+      >
+        <option value="">全て</option>
+        <option value={TaskState.unstarted}>
+          {TaskStateLabel(TaskState.unstarted)}
+        </option>
+        <option value={TaskState.started}>
+          {TaskStateLabel(TaskState.started)}
+        </option>
+        <option value={TaskState.finished}>
+          {TaskStateLabel(TaskState.finished)}
+        </option>
+      </select>
+      <button className="bg-gray-300 border" onClick={taskSearch}>
         検索
       </button>
       <div>
