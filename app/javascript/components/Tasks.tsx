@@ -7,6 +7,7 @@ const Tasks = () => {
   const [searchInput, setSearchInput] = useState("");
   const [title, setTitle] = useState("");
   const { data: { tasks } = {}, fetchMore } = useTasksQuery({
+    fetchPolicy: "cache-and-network",
     variables: {
       title: title,
       first: 20,
