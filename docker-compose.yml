@@ -11,6 +11,7 @@ services:
       - 15432:5432 # 左がローカル、右がdockerのport番号
 
   web:
+    stdin_open: true
     tty: true
     build: .
     command: bash -c "rm -f tmp/pids/server.pid && yarn install  && ./bin/dev"
