@@ -106,6 +106,7 @@ export type QueryTasksArgs = {
   before?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
   last?: InputMaybe<Scalars['Int']>;
+  state?: InputMaybe<Scalars['String']>;
   title: Scalars['String'];
 };
 
@@ -241,6 +242,7 @@ export type TaskQuery = { __typename?: 'Query', task: { __typename?: 'Task', id:
 
 export type TasksQueryVariables = Exact<{
   title: Scalars['String'];
+  state?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
   after?: InputMaybe<Scalars['String']>;
 }>;
@@ -441,8 +443,8 @@ export type TaskQueryHookResult = ReturnType<typeof useTaskQuery>;
 export type TaskLazyQueryHookResult = ReturnType<typeof useTaskLazyQuery>;
 export type TaskQueryResult = Apollo.QueryResult<TaskQuery, TaskQueryVariables>;
 export const TasksDocument = gql`
-    query tasks($title: String!, $first: Int, $after: String) {
-  tasks(title: $title, first: $first, after: $after) {
+    query tasks($title: String!, $state: String, $first: Int, $after: String) {
+  tasks(title: $title, state: $state, first: $first, after: $after) {
     edges {
       cursor
       node {
@@ -476,6 +478,7 @@ export const TasksDocument = gql`
  * const { data, loading, error } = useTasksQuery({
  *   variables: {
  *      title: // value for 'title'
+ *      state: // value for 'state'
  *      first: // value for 'first'
  *      after: // value for 'after'
  *   },

@@ -1,4 +1,4 @@
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { useTaskQuery } from "../graphql/generated";
 import TaskDelete from "./TaskDelete";
 import FlashMessage from "./FlashMessage";
@@ -19,6 +19,7 @@ const TaskShow = () => {
   return (
     <div>
       <FlashMessage />
+      <Link to={"/"}>トップページへ</Link>
       <p>{task.id}</p>
       <p>{task.title}</p>
       <p>{TaskStateLabel(task.state as any)}</p>

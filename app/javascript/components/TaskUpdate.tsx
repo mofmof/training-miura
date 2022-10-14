@@ -1,6 +1,6 @@
 import { TaskStateEnum, useUpdateTaskMutation } from "../graphql/generated";
 import { FC, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { TaskStateLabel, TaskState } from "./Enum";
 
 type Props = {
@@ -49,6 +49,7 @@ const TaskUpdate: FC<Props> = (props) => {
   return (
     <>
       <p style={{ whiteSpace: "pre-line" }}>{messages}</p>
+      <Link to={"/"}>トップページへ</Link>
       <div>
         <input value={title} onChange={(e) => setTitle(e.target.value)} />
       </div>
