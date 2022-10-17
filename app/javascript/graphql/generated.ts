@@ -120,6 +120,7 @@ export type PageInfo = {
 
 export type Query = {
   __typename?: 'Query';
+  labels: Array<Label>;
   task: Task;
   tasks: TaskConnection;
   users: Array<User>;
@@ -269,6 +270,11 @@ export type UpdateTaskMutationVariables = Exact<{
 
 
 export type UpdateTaskMutation = { __typename?: 'Mutation', updateTask?: { __typename?: 'UpdateTaskPayload', task: { __typename?: 'Task', id: string, title: string, body?: string | null, state: TaskStateEnum, limitOn?: any | null } } | null };
+
+export type LabelsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type LabelsQuery = { __typename?: 'Query', labels: Array<{ __typename?: 'Label', id: string, name: string }> };
 
 export type TaskQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -476,6 +482,41 @@ export function useUpdateTaskMutation(baseOptions?: Apollo.MutationHookOptions<U
 export type UpdateTaskMutationHookResult = ReturnType<typeof useUpdateTaskMutation>;
 export type UpdateTaskMutationResult = Apollo.MutationResult<UpdateTaskMutation>;
 export type UpdateTaskMutationOptions = Apollo.BaseMutationOptions<UpdateTaskMutation, UpdateTaskMutationVariables>;
+export const LabelsDocument = gql`
+    query labels {
+  labels {
+    id
+    name
+  }
+}
+    `;
+
+/**
+ * __useLabelsQuery__
+ *
+ * To run a query within a React component, call `useLabelsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useLabelsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useLabelsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useLabelsQuery(baseOptions?: Apollo.QueryHookOptions<LabelsQuery, LabelsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<LabelsQuery, LabelsQueryVariables>(LabelsDocument, options);
+      }
+export function useLabelsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<LabelsQuery, LabelsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<LabelsQuery, LabelsQueryVariables>(LabelsDocument, options);
+        }
+export type LabelsQueryHookResult = ReturnType<typeof useLabelsQuery>;
+export type LabelsLazyQueryHookResult = ReturnType<typeof useLabelsLazyQuery>;
+export type LabelsQueryResult = Apollo.QueryResult<LabelsQuery, LabelsQueryVariables>;
 export const TaskDocument = gql`
     query task($id: ID!) {
   task(id: $id) {
