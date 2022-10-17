@@ -9,6 +9,7 @@ class User < ApplicationRecord
   validates :password_confirmation, presence: true, if: -> { new_record? || changes[:crypted_password] }
 
   has_many :tasks, dependent: :destroy
+  has_many :labels, dependent: :destroy
 
   enum role: { general: 0, admin: 10 }
 end
