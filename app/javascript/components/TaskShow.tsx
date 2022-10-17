@@ -3,6 +3,7 @@ import { useTaskQuery } from "../graphql/generated";
 import TaskDelete from "./TaskDelete";
 import FlashMessage from "./FlashMessage";
 import { TaskStateLabel } from "./Enum";
+import Labels from "./Labels";
 
 const TaskShow = () => {
   const navigate = useNavigate();
@@ -27,6 +28,7 @@ const TaskShow = () => {
       <p>{task.limitOn ? task.limitOn : "期限未登録"}</p>
       <button onClick={onClickTaskShow}>編集</button>
       <TaskDelete id={task.id} />
+      <Labels />
     </div>
   );
 };
