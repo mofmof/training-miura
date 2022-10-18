@@ -5,6 +5,8 @@ class CreateTaskLabels < ActiveRecord::Migration[7.0]
       t.references :label, null: false, foreign_key: true
 
       t.timestamps
+
+      t.index [:task_id, :label_id], unique: true
     end
   end
 end
