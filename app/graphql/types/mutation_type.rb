@@ -4,6 +4,7 @@ module Types
     field :update_task, mutation: Mutations::UpdateTask
     field :delete_task, mutation: Mutations::DeleteTask
     field :create_label, mutation: Mutations::CreateLabel
+    field :delete_label, mutation: Mutations::DeleteLabel
 
     field :sign_up, mutation: Mutations::SignUp
   end

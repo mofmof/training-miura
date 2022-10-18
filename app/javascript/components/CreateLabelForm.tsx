@@ -6,12 +6,13 @@ const CreateLabelForm = () => {
   const navigate = useNavigate();
   const [messages, setMessages] = useState("");
   const [createLabel] = useCreateLabelMutation({
+    refetchQueries: ["labels"],
     onError: (e) => {
       setMessages(e.message);
       return;
     },
     onCompleted: () => {
-      navigate("/", { state: { msg: "ラベルが作成されました" } });
+      navigate("/labels", { state: { msg: "ラベルが作成されました" } });
     },
   });
   const [name, setName] = useState("");
