@@ -3,7 +3,7 @@ module Queries
     type [ObjectTypes::Label], null: false
 
     def resolve
-      context[:current_user].labels.order(created_at: :desc)
+      context[:current_user].labels.order(:name)
     end
   end
 end

@@ -1,16 +1,15 @@
 import { Link } from "react-router-dom";
 import Tasks from "./Tasks";
 import InputTask from "./InputTask";
-import CreateLabelForm from "./CreateLabelForm";
 import FlashMessage from "./FlashMessage";
 
 const TopPage = () => {
   return (
     <>
       <FlashMessage />
+      <Link to={"/labels"}>ラベル一覧</Link>
       <Tasks />
       <InputTask />
-      <CreateLabelForm />
       <div>
         <Link to={"/csv_export"}>タスクをダウンロード</Link>
       </div>
