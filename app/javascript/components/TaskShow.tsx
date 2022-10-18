@@ -4,6 +4,7 @@ import TaskDelete from "./TaskDelete";
 import FlashMessage from "./FlashMessage";
 import { TaskStateLabel } from "./Enum";
 import Labels from "./Labels";
+import TaskLabels from "./TaskLabels";
 
 const TaskShow = () => {
   const navigate = useNavigate();
@@ -28,7 +29,8 @@ const TaskShow = () => {
       <p>{task.limitOn ? task.limitOn : "期限未登録"}</p>
       <button onClick={onClickTaskShow}>編集</button>
       <TaskDelete id={task.id} />
-      <Labels />
+      <TaskLabels id={task.id} addFlg={false} />
+      <TaskLabels id={task.id} addFlg={true} />
     </div>
   );
 };

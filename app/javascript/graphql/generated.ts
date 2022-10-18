@@ -143,12 +143,19 @@ export type Query = {
   __typename?: 'Query';
   labels: Array<Label>;
   task: Task;
+  taskLabels: Array<Label>;
   tasks: TaskConnection;
   users: Array<User>;
 };
 
 
 export type QueryTaskArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type QueryTaskLabelsArgs = {
+  addFlg: Scalars['Boolean'];
   id: Scalars['ID'];
 };
 
@@ -310,6 +317,14 @@ export type TaskQueryVariables = Exact<{
 
 
 export type TaskQuery = { __typename?: 'Query', task: { __typename?: 'Task', id: string, title: string, body?: string | null, state: TaskStateEnum, limitOn?: any | null } };
+
+export type TaskLabelsQueryVariables = Exact<{
+  id: Scalars['ID'];
+  addFlg: Scalars['Boolean'];
+}>;
+
+
+export type TaskLabelsQuery = { __typename?: 'Query', taskLabels: Array<{ __typename?: 'Label', id: string, name: string }> };
 
 export type TasksQueryVariables = Exact<{
   title: Scalars['String'];
@@ -617,6 +632,43 @@ export function useTaskLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<TaskQ
 export type TaskQueryHookResult = ReturnType<typeof useTaskQuery>;
 export type TaskLazyQueryHookResult = ReturnType<typeof useTaskLazyQuery>;
 export type TaskQueryResult = Apollo.QueryResult<TaskQuery, TaskQueryVariables>;
+export const TaskLabelsDocument = gql`
+    query taskLabels($id: ID!, $addFlg: Boolean!) {
+  taskLabels(id: $id, addFlg: $addFlg) {
+    id
+    name
+  }
+}
+    `;
+
+/**
+ * __useTaskLabelsQuery__
+ *
+ * To run a query within a React component, call `useTaskLabelsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useTaskLabelsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useTaskLabelsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *      addFlg: // value for 'addFlg'
+ *   },
+ * });
+ */
+export function useTaskLabelsQuery(baseOptions: Apollo.QueryHookOptions<TaskLabelsQuery, TaskLabelsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<TaskLabelsQuery, TaskLabelsQueryVariables>(TaskLabelsDocument, options);
+      }
+export function useTaskLabelsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<TaskLabelsQuery, TaskLabelsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<TaskLabelsQuery, TaskLabelsQueryVariables>(TaskLabelsDocument, options);
+        }
+export type TaskLabelsQueryHookResult = ReturnType<typeof useTaskLabelsQuery>;
+export type TaskLabelsLazyQueryHookResult = ReturnType<typeof useTaskLabelsLazyQuery>;
+export type TaskLabelsQueryResult = Apollo.QueryResult<TaskLabelsQuery, TaskLabelsQueryVariables>;
 export const TasksDocument = gql`
     query tasks($title: String!, $state: String, $first: Int, $after: String) {
   tasks(title: $title, state: $state, first: $first, after: $after) {
