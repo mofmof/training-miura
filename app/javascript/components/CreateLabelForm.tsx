@@ -12,6 +12,7 @@ const CreateLabelForm = () => {
       return;
     },
     onCompleted: () => {
+      setName("");
       navigate("/labels", { state: { msg: "ラベルが作成されました" } });
     },
   });
@@ -22,7 +23,6 @@ const CreateLabelForm = () => {
         name: name,
       },
     });
-    setName("");
   };
   return (
     <div className="mt-10 border-t-4 border-b-4">
