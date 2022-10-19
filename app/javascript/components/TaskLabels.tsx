@@ -21,7 +21,7 @@ const TaskLabels: React.FC<Props> = (props) => {
   const [addLabel] = useAddLabelToTaskMutation({
     refetchQueries: ["taskLabels"],
     onError: () => {
-      navigate("/labels", { state: { msg: "削除失敗" } });
+      navigate("/labels", { state: { msg: "追加失敗" } });
     },
   });
 
