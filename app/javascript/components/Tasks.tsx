@@ -40,8 +40,9 @@ const Tasks = () => {
     return `${y + "-" + m + "-" + d}`;
   };
 
-  const diffLimitOn = (limitOn: any) => {
+  const diffLimitOn = (limitOn: any, state: any) => {
     if (limitOn == null) return;
+    if (state == "finished") return;
     const limitOnParse: Date = new Date(limitOn);
     const today: Date = new Date(formatDate(new Date()));
     const diffDay: number = Math.floor(
@@ -60,6 +61,15 @@ const Tasks = () => {
     };
 
     return limitMessage();
+  };
+
+  const limitOnDisplay = (limitOn: any, state: any) => {
+    if (state == "finished") return;
+    if (limitOn) {
+      return `-${limitOn}`;
+    } else {
+      return "-期限未登録";
+    }
   };
 
   return (
@@ -97,9 +107,9 @@ const Tasks = () => {
         {tasks?.edges?.map((task) => (
           <li key={task?.node?.id}>
             <Link to={`/tasks/${task?.node?.id}`}>
-              {TaskStateLabel(task?.node?.state as any)}-{task?.node?.title}-
-              {task?.node?.limitOn ? task?.node?.limitOn : "期限未登録"}
-              {diffLimitOn(task?.node?.limitOn)}
+              {TaskStateLabel(task?.node?.state as any)}-{task?.node?.title}
+              {limitOnDisplay(task?.node?.limitOn, task?.node?.state)}
+              {diffLimitOn(task?.node?.limitOn, task?.node?.state)}
             </Link>
           </li>
         ))}
