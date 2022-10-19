@@ -25,7 +25,7 @@ const CreateLabelForm = () => {
     });
   };
   return (
-    <div className="mt-10 border-t-4 border-b-4">
+    <form className="mt-10 border-t-4 border-b-4">
       <p style={{ whiteSpace: "pre-line" }}>{messages}</p>
       <input
         className="border border-black"
@@ -39,7 +39,7 @@ const CreateLabelForm = () => {
       >
         登録
       </button>
-    </div>
+    </form>
   );
 };
 
