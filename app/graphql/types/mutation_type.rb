@@ -6,7 +6,7 @@ module Types
     field :create_label, mutation: Mutations::CreateLabel
     field :delete_label, mutation: Mutations::DeleteLabel
     field :add_label_to_task, mutation: Mutations::AddLabelToTask
-    field :remove_label_to_task, mutation: Mutations::RemoveLabelToTask
+    field :remove_label_from_task, mutation: Mutations::RemoveLabelFromTask
 
     field :sign_up, mutation: Mutations::SignUp
   end

@@ -1,5 +1,5 @@
 module Mutations
-  class RemoveLabelToTask < LoginRequiredMutation
+  class RemoveLabelFromTask < LoginRequiredMutation
     argument :task_id, ID, required: true
     argument :label_id, ID, required: true
 

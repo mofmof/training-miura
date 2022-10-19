@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import {
   useTaskLabelsQuery,
   useAddLabelToTaskMutation,
-  useRemoveLabelToTaskMutation,
+  useRemoveLabelFromTaskMutation,
 } from "../graphql/generated";
 
 type Props = {
@@ -25,7 +25,7 @@ const TaskLabels: React.FC<Props> = (props) => {
     },
   });
 
-  const [removeLabel] = useRemoveLabelToTaskMutation({
+  const [removeLabel] = useRemoveLabelFromTaskMutation({
     refetchQueries: ["taskLabels"],
     onError: () => {
       navigate("/labels", { state: { msg: "削除失敗" } });
