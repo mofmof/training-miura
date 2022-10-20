@@ -171,6 +171,7 @@ export type Query = {
   __typename?: 'Query';
   labels: Array<Label>;
   shareTasks: TaskConnection;
+  shareUsers: Array<User>;
   task: Task;
   taskLabels: Array<Label>;
   tasks: TaskConnection;
@@ -400,6 +401,11 @@ export type ShareTasksQueryVariables = Exact<{
 
 
 export type ShareTasksQuery = { __typename?: 'Query', shareTasks: { __typename?: 'TaskConnection', edges?: Array<{ __typename?: 'TaskEdge', cursor: string, node?: { __typename?: 'Task', id: string, title: string, body?: string | null, state: TaskStateEnum, limitOn?: any | null } | null } | null> | null, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor?: string | null, endCursor?: string | null } } };
+
+export type ShareUsersQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ShareUsersQuery = { __typename?: 'Query', shareUsers: Array<{ __typename?: 'User', id: string, name: string }> };
 
 export type TaskQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -808,6 +814,41 @@ export function useShareTasksLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions
 export type ShareTasksQueryHookResult = ReturnType<typeof useShareTasksQuery>;
 export type ShareTasksLazyQueryHookResult = ReturnType<typeof useShareTasksLazyQuery>;
 export type ShareTasksQueryResult = Apollo.QueryResult<ShareTasksQuery, ShareTasksQueryVariables>;
+export const ShareUsersDocument = gql`
+    query shareUsers {
+  shareUsers {
+    id
+    name
+  }
+}
+    `;
+
+/**
+ * __useShareUsersQuery__
+ *
+ * To run a query within a React component, call `useShareUsersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useShareUsersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useShareUsersQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useShareUsersQuery(baseOptions?: Apollo.QueryHookOptions<ShareUsersQuery, ShareUsersQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ShareUsersQuery, ShareUsersQueryVariables>(ShareUsersDocument, options);
+      }
+export function useShareUsersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ShareUsersQuery, ShareUsersQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ShareUsersQuery, ShareUsersQueryVariables>(ShareUsersDocument, options);
+        }
+export type ShareUsersQueryHookResult = ReturnType<typeof useShareUsersQuery>;
+export type ShareUsersLazyQueryHookResult = ReturnType<typeof useShareUsersLazyQuery>;
+export type ShareUsersQueryResult = Apollo.QueryResult<ShareUsersQuery, ShareUsersQueryVariables>;
 export const TaskDocument = gql`
     query task($id: ID!) {
   task(id: $id) {
