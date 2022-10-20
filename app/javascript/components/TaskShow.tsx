@@ -3,7 +3,6 @@ import { useTaskQuery } from "../graphql/generated";
 import TaskDelete from "./TaskDelete";
 import FlashMessage from "./FlashMessage";
 import { TaskStateLabel } from "./Enum";
-import Labels from "./Labels";
 import TaskLabels from "./TaskLabels";
 
 const TaskShow = () => {
@@ -22,6 +21,9 @@ const TaskShow = () => {
     <div>
       <FlashMessage />
       <Link to={"/"}>トップページへ</Link>
+      <div>
+        <Link to={`/tasks/${id}/users`}>タスク共有設定</Link>
+      </div>
       <p>{task.id}</p>
       <p>{task.title}</p>
       <p>{TaskStateLabel(task.state as any)}</p>
