@@ -170,10 +170,21 @@ export type PageInfo = {
 export type Query = {
   __typename?: 'Query';
   labels: Array<Label>;
+  shareTasks: TaskConnection;
   task: Task;
   taskLabels: Array<Label>;
   tasks: TaskConnection;
   users: Array<User>;
+};
+
+
+export type QueryShareTasksArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  state?: InputMaybe<Scalars['String']>;
+  title: Scalars['String'];
 };
 
 
@@ -379,6 +390,16 @@ export type LabelsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type LabelsQuery = { __typename?: 'Query', labels: Array<{ __typename?: 'Label', id: string, name: string }> };
+
+export type ShareTasksQueryVariables = Exact<{
+  title: Scalars['String'];
+  state?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type ShareTasksQuery = { __typename?: 'Query', shareTasks: { __typename?: 'TaskConnection', edges?: Array<{ __typename?: 'TaskEdge', cursor: string, node?: { __typename?: 'Task', id: string, title: string, body?: string | null, state: TaskStateEnum, limitOn?: any | null } | null } | null> | null, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor?: string | null, endCursor?: string | null } } };
 
 export type TaskQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -734,6 +755,59 @@ export function useLabelsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Lab
 export type LabelsQueryHookResult = ReturnType<typeof useLabelsQuery>;
 export type LabelsLazyQueryHookResult = ReturnType<typeof useLabelsLazyQuery>;
 export type LabelsQueryResult = Apollo.QueryResult<LabelsQuery, LabelsQueryVariables>;
+export const ShareTasksDocument = gql`
+    query shareTasks($title: String!, $state: String, $first: Int, $after: String) {
+  shareTasks(title: $title, state: $state, first: $first, after: $after) {
+    edges {
+      cursor
+      node {
+        id
+        title
+        body
+        state
+        limitOn
+      }
+    }
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+  }
+}
+    `;
+
+/**
+ * __useShareTasksQuery__
+ *
+ * To run a query within a React component, call `useShareTasksQuery` and pass it any options that fit your needs.
+ * When your component renders, `useShareTasksQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useShareTasksQuery({
+ *   variables: {
+ *      title: // value for 'title'
+ *      state: // value for 'state'
+ *      first: // value for 'first'
+ *      after: // value for 'after'
+ *   },
+ * });
+ */
+export function useShareTasksQuery(baseOptions: Apollo.QueryHookOptions<ShareTasksQuery, ShareTasksQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ShareTasksQuery, ShareTasksQueryVariables>(ShareTasksDocument, options);
+      }
+export function useShareTasksLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ShareTasksQuery, ShareTasksQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ShareTasksQuery, ShareTasksQueryVariables>(ShareTasksDocument, options);
+        }
+export type ShareTasksQueryHookResult = ReturnType<typeof useShareTasksQuery>;
+export type ShareTasksLazyQueryHookResult = ReturnType<typeof useShareTasksLazyQuery>;
+export type ShareTasksQueryResult = Apollo.QueryResult<ShareTasksQuery, ShareTasksQueryVariables>;
 export const TaskDocument = gql`
     query task($id: ID!) {
   task(id: $id) {
