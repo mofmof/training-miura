@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useTasksQuery } from "../graphql/generated";
+import { useTasksQuery, TaskStateEnum } from "../graphql/generated";
 import { TaskStateLabel, TaskState } from "./Enum";
 
 const Tasks = () => {
@@ -40,7 +40,7 @@ const Tasks = () => {
     return `${y + "-" + m + "-" + d}`;
   };
 
-  const diffLimitOn = (limitOn: any, state: any) => {
+  const diffLimitOn = (limitOn: any, state: TaskStateEnum | undefined) => {
     if (limitOn == null) return;
     if (state == "finished") return;
     const limitOnParse: Date = new Date(limitOn);
@@ -63,7 +63,7 @@ const Tasks = () => {
     return limitMessage();
   };
 
-  const limitOnDisplay = (limitOn: any, state: any) => {
+  const limitOnDisplay = (limitOn: any, state: TaskStateEnum | undefined) => {
     if (state == "finished") return;
     if (limitOn) {
       return `-${limitOn}`;
@@ -107,7 +107,7 @@ const Tasks = () => {
         {tasks?.edges?.map((task) => (
           <li key={task?.node?.id}>
             <Link to={`/tasks/${task?.node?.id}`}>
-              {TaskStateLabel(task?.node?.state as any)}-{task?.node?.title}
+              {TaskStateLabel(task?.node?.state)}-{task?.node?.title}
               {limitOnDisplay(task?.node?.limitOn, task?.node?.state)}
               {diffLimitOn(task?.node?.limitOn, task?.node?.state)}
             </Link>

@@ -6,7 +6,7 @@ export const TaskState = {
 
 export type TaskState = typeof TaskState[keyof typeof TaskState];
 
-export const TaskStateLabel = (name: TaskState): string => {
+export const TaskStateLabel = (name: TaskState | undefined): string => {
   switch (name) {
     case "unstarted":
       return "未着手";
@@ -14,5 +14,7 @@ export const TaskStateLabel = (name: TaskState): string => {
       return "着手中";
     case "finished":
       return "完了";
+    default:
+      return "";
   }
 };
