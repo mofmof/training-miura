@@ -2,12 +2,16 @@ import { Link } from "react-router-dom";
 import Tasks from "./Tasks";
 import InputTask from "./InputTask";
 import FlashMessage from "./FlashMessage";
+import ShareTasks from "./ShareTasks";
 
 const TopPage = () => {
   return (
     <>
       <FlashMessage />
-      <Link to={"/labels"}>ラベル一覧</Link>
+      <div>
+        <Link to={"/labels"}>ラベル一覧</Link>
+      </div>
+      <Link to={"/sharetasks"}>共有されたタスク一覧</Link>
       <Tasks />
       <InputTask />
       <div>

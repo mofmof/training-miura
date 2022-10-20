@@ -8,6 +8,7 @@ import Logout from "./components/Logout";
 import Labels from "./components/Labels";
 import CsvExport from "./components/CsvExport";
 import Users from "./components/Admin/Users";
+import ShareTasks from "./components/ShareTasks";
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<TopPage />} />
           <Route path="tasks/:id" element={<TaskShow />} />
+          <Route path="sharetasks" element={<ShareTasks />} />
           <Route path="tasks/:id/edit" element={<TaskUpdateParent />} />
           <Route path="labels" element={<Labels />} />
           <Route path="signup" element={<SignUp />} />
