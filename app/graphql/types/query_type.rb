@@ -12,5 +12,6 @@ module Types
     field :task_labels, resolver: Queries::TaskLabelsType
 
     field :users, resolver: Queries::Users
+    field :share_users, resolver: Queries::ShareUsersType
   end
 end
