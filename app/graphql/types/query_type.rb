@@ -13,5 +13,6 @@ module Types
 
     field :users, resolver: Queries::Users
     field :share_users, resolver: Queries::ShareUsersType
+    field :unshare_users, resolver: Queries::UnshareUsersType
   end
 end
