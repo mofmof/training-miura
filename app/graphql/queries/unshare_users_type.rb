@@ -5,7 +5,7 @@ module Queries
 
     def resolve(id:)
       task = Task.find(id)
-      User.where.not(id: context[:current_user].id) - task.users
+      User.where.not(id: task.user_id) - task.users
     end
   end
 end
