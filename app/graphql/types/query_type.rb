@@ -7,6 +7,9 @@ module Types
     field :tasks, resolver: Queries::TasksType
     field :task, resolver: Queries::TaskType
 
+    field :labels, resolver: Queries::LabelsType
+    field :task_labels, resolver: Queries::TaskLabelsType
+
     field :users, resolver: Queries::Users
   end
 end

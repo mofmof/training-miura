@@ -7,6 +7,7 @@ const TopPage = () => {
   return (
     <>
       <FlashMessage />
+      <Link to={"/labels"}>ラベル一覧</Link>
       <Tasks />
       <InputTask />
       <div>
