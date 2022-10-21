@@ -3,6 +3,7 @@ class Task < ApplicationRecord
   has_many :task_labels, dependent: :destroy
   has_many :labels, through: :task_labels
   has_many :share_tasks, dependent: :destroy
+  has_many :users, through: :share_tasks
 
   validates :title, presence: true, length: { maximum: 255 }
   validates :body, length: { maximum: 65_535 }
