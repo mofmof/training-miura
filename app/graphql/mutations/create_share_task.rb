@@ -8,7 +8,7 @@ module Mutations
 
     def resolve(user_id:, task_id:)
       task_user_id = Task.find(task_id).user_id
-      share_task = ShareTask.new(user_id:, task_id:) if task_user_id != user
+      share_task = ShareTask.new(user_id:, task_id:) if task_user_id != user_id
       if share_task.save
         { user_id:, task_id: }
       else
