@@ -9,7 +9,7 @@ module Types
     field :share_tasks, resolver: Queries::ShareTasksType
 
     field :labels, resolver: Queries::LabelsType
-    field :task_labels, resolver: Queries::TaskLabelsType
+    field :unadded_task_labels, resolver: Queries::UnaddedTaskLabelsType
 
     field :users, resolver: Queries::Users
     field :share_users, resolver: Queries::ShareUsersType

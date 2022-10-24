@@ -219,8 +219,8 @@ export type Query = {
   shareTasks: TaskConnection;
   shareUsers: Array<User>;
   task: Task;
-  taskLabels: Array<Label>;
   tasks: TaskConnection;
+  unaddedTaskLabels: Array<Label>;
   unshareUsers: Array<User>;
   users: Array<User>;
 };
@@ -246,12 +246,6 @@ export type QueryTaskArgs = {
 };
 
 
-export type QueryTaskLabelsArgs = {
-  addFlg: Scalars['Boolean'];
-  id: Scalars['ID'];
-};
-
-
 export type QueryTasksArgs = {
   after?: InputMaybe<Scalars['String']>;
   before?: InputMaybe<Scalars['String']>;
@@ -259,6 +253,11 @@ export type QueryTasksArgs = {
   last?: InputMaybe<Scalars['Int']>;
   state?: InputMaybe<Scalars['String']>;
   title: Scalars['String'];
+};
+
+
+export type QueryUnaddedTaskLabelsArgs = {
+  id: Scalars['ID'];
 };
 
 
@@ -302,6 +301,7 @@ export type Task = {
   body?: Maybe<Scalars['String']>;
   createdAt: Scalars['ISO8601DateTime'];
   id: Scalars['ID'];
+  labels: Array<Label>;
   limitOn?: Maybe<Scalars['ISO8601Date']>;
   state: TaskStateEnum;
   title: Scalars['String'];
@@ -487,15 +487,7 @@ export type TaskQueryVariables = Exact<{
 }>;
 
 
-export type TaskQuery = { __typename?: 'Query', task: { __typename?: 'Task', id: string, title: string, body?: string | null, state: TaskStateEnum, limitOn?: any | null } };
-
-export type TaskLabelsQueryVariables = Exact<{
-  id: Scalars['ID'];
-  addFlg: Scalars['Boolean'];
-}>;
-
-
-export type TaskLabelsQuery = { __typename?: 'Query', taskLabels: Array<{ __typename?: 'Label', id: string, name: string }> };
+export type TaskQuery = { __typename?: 'Query', task: { __typename?: 'Task', id: string, title: string, body?: string | null, state: TaskStateEnum, limitOn?: any | null, labels: Array<{ __typename?: 'Label', id: string, name: string }> } };
 
 export type TasksQueryVariables = Exact<{
   title: Scalars['String'];
@@ -506,6 +498,13 @@ export type TasksQueryVariables = Exact<{
 
 
 export type TasksQuery = { __typename?: 'Query', tasks: { __typename?: 'TaskConnection', edges?: Array<{ __typename?: 'TaskEdge', cursor: string, node?: { __typename?: 'Task', id: string, title: string, body?: string | null, state: TaskStateEnum, limitOn?: any | null } | null } | null> | null, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor?: string | null, endCursor?: string | null } } };
+
+export type UnaddedTaskLabelsQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type UnaddedTaskLabelsQuery = { __typename?: 'Query', unaddedTaskLabels: Array<{ __typename?: 'Label', id: string, name: string }> };
 
 export type UnshareUsersQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -1010,6 +1009,10 @@ export const TaskDocument = gql`
     body
     state
     limitOn
+    labels {
+      id
+      name
+    }
   }
 }
     `;
@@ -1041,43 +1044,6 @@ export function useTaskLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<TaskQ
 export type TaskQueryHookResult = ReturnType<typeof useTaskQuery>;
 export type TaskLazyQueryHookResult = ReturnType<typeof useTaskLazyQuery>;
 export type TaskQueryResult = Apollo.QueryResult<TaskQuery, TaskQueryVariables>;
-export const TaskLabelsDocument = gql`
-    query taskLabels($id: ID!, $addFlg: Boolean!) {
-  taskLabels(id: $id, addFlg: $addFlg) {
-    id
-    name
-  }
-}
-    `;
-
-/**
- * __useTaskLabelsQuery__
- *
- * To run a query within a React component, call `useTaskLabelsQuery` and pass it any options that fit your needs.
- * When your component renders, `useTaskLabelsQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useTaskLabelsQuery({
- *   variables: {
- *      id: // value for 'id'
- *      addFlg: // value for 'addFlg'
- *   },
- * });
- */
-export function useTaskLabelsQuery(baseOptions: Apollo.QueryHookOptions<TaskLabelsQuery, TaskLabelsQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<TaskLabelsQuery, TaskLabelsQueryVariables>(TaskLabelsDocument, options);
-      }
-export function useTaskLabelsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<TaskLabelsQuery, TaskLabelsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<TaskLabelsQuery, TaskLabelsQueryVariables>(TaskLabelsDocument, options);
-        }
-export type TaskLabelsQueryHookResult = ReturnType<typeof useTaskLabelsQuery>;
-export type TaskLabelsLazyQueryHookResult = ReturnType<typeof useTaskLabelsLazyQuery>;
-export type TaskLabelsQueryResult = Apollo.QueryResult<TaskLabelsQuery, TaskLabelsQueryVariables>;
 export const TasksDocument = gql`
     query tasks($title: String!, $state: String, $first: Int, $after: String) {
   tasks(title: $title, state: $state, first: $first, after: $after) {
@@ -1131,6 +1097,42 @@ export function useTasksLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Task
 export type TasksQueryHookResult = ReturnType<typeof useTasksQuery>;
 export type TasksLazyQueryHookResult = ReturnType<typeof useTasksLazyQuery>;
 export type TasksQueryResult = Apollo.QueryResult<TasksQuery, TasksQueryVariables>;
+export const UnaddedTaskLabelsDocument = gql`
+    query unaddedTaskLabels($id: ID!) {
+  unaddedTaskLabels(id: $id) {
+    id
+    name
+  }
+}
+    `;
+
+/**
+ * __useUnaddedTaskLabelsQuery__
+ *
+ * To run a query within a React component, call `useUnaddedTaskLabelsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUnaddedTaskLabelsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUnaddedTaskLabelsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useUnaddedTaskLabelsQuery(baseOptions: Apollo.QueryHookOptions<UnaddedTaskLabelsQuery, UnaddedTaskLabelsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<UnaddedTaskLabelsQuery, UnaddedTaskLabelsQueryVariables>(UnaddedTaskLabelsDocument, options);
+      }
+export function useUnaddedTaskLabelsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UnaddedTaskLabelsQuery, UnaddedTaskLabelsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<UnaddedTaskLabelsQuery, UnaddedTaskLabelsQueryVariables>(UnaddedTaskLabelsDocument, options);
+        }
+export type UnaddedTaskLabelsQueryHookResult = ReturnType<typeof useUnaddedTaskLabelsQuery>;
+export type UnaddedTaskLabelsLazyQueryHookResult = ReturnType<typeof useUnaddedTaskLabelsLazyQuery>;
+export type UnaddedTaskLabelsQueryResult = Apollo.QueryResult<UnaddedTaskLabelsQuery, UnaddedTaskLabelsQueryVariables>;
 export const UnshareUsersDocument = gql`
     query unshareUsers($id: ID!) {
   unshareUsers(id: $id) {
