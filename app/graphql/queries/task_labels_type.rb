@@ -1,5 +1,7 @@
 module Queries
-  class TaskLabelsType < Queries::LoginRequiredQuery
+  class TaskLabelsType < Queries::BaseQuery
+    include Concern::LoginRequiredQuery
+
     argument :id, ID, required: true
     argument :addFlg, Boolean, required: true
     type [ObjectTypes::Label], null: false

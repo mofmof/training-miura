@@ -1,5 +1,7 @@
 module Queries
-  class ShareTasksType < Queries::LoginRequiredQuery
+  class ShareTasksType < Queries::BaseQuery
+    include Concern::LoginRequiredQuery
+
     argument :title, String, required: true
     argument :state, String, required: false
     type ObjectTypes::Task.connection_type, null: false

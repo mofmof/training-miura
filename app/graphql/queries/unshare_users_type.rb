@@ -1,5 +1,7 @@
 module Queries
-  class UnshareUsersType < Queries::LoginRequiredQuery
+  class UnshareUsersType < Queries::BaseQuery
+    include Concern::LoginRequiredQuery
+
     argument :id, ID, required: true
     type [ObjectTypes::User], null: false
 

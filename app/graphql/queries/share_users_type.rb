@@ -1,5 +1,7 @@
 module Queries
-  class ShareUsersType < Queries::LoginRequiredQuery
+  class ShareUsersType < Queries::BaseQuery
+    include Concern::LoginRequiredQuery
+
     argument :id, ID, required: true
     type [ObjectTypes::User], null: false
 
