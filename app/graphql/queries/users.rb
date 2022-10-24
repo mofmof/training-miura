@@ -1,5 +1,7 @@
 module Queries
-  class Users < Queries::AdminRequiredQuery
+  class Users < Queries::BaseQuery
+    include Concern::AdminRequiredQuery
+
     type [ObjectTypes::User], null: false
 
     def resolve
