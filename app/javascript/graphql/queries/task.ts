@@ -8,6 +8,7 @@ export default gql`
       body
       state
       limitOn
+      imageUrl
       labels {
         id
         name

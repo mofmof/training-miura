@@ -1,4 +1,6 @@
 class Task < ApplicationRecord
+  include Rails.application.routes.url_helpers
+
   belongs_to :user
   has_many :task_labels, dependent: :destroy
   has_many :labels, through: :task_labels
@@ -13,4 +15,8 @@ class Task < ApplicationRecord
 
   scope :limit_within_one_day, -> { where(limit_on: Time.zone.today..Time.zone.tomorrow) }
   scope :find_title, ->(title) { where('title LIKE ?', "%#{title}%") }
+
+  def image_url
+    rails_blob_path(image, disposition: 'attachment', host: 'localhost:3000')
+  end
 end

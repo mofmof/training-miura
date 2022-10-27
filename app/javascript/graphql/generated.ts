@@ -13,6 +13,7 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  File: any;
   ISO8601Date: any;
   ISO8601DateTime: any;
 };
@@ -301,6 +302,7 @@ export type Task = {
   body?: Maybe<Scalars['String']>;
   createdAt: Scalars['ISO8601DateTime'];
   id: Scalars['ID'];
+  imageUrl?: Maybe<Scalars['String']>;
   labels: Array<Label>;
   limitOn?: Maybe<Scalars['ISO8601Date']>;
   state: TaskStateEnum;
@@ -311,6 +313,7 @@ export type Task = {
 
 export type TaskAttributes = {
   body?: InputMaybe<Scalars['String']>;
+  image?: InputMaybe<Scalars['File']>;
   limitOn?: InputMaybe<Scalars['String']>;
   state: TaskStateEnum;
   title: Scalars['String'];
@@ -487,7 +490,7 @@ export type TaskQueryVariables = Exact<{
 }>;
 
 
-export type TaskQuery = { __typename?: 'Query', task: { __typename?: 'Task', id: string, title: string, body?: string | null, state: TaskStateEnum, limitOn?: any | null, labels: Array<{ __typename?: 'Label', id: string, name: string }> } };
+export type TaskQuery = { __typename?: 'Query', task: { __typename?: 'Task', id: string, title: string, body?: string | null, state: TaskStateEnum, limitOn?: any | null, imageUrl?: string | null, labels: Array<{ __typename?: 'Label', id: string, name: string }> } };
 
 export type TasksQueryVariables = Exact<{
   title: Scalars['String'];
@@ -1009,6 +1012,7 @@ export const TaskDocument = gql`
     body
     state
     limitOn
+    imageUrl
     labels {
       id
       name
