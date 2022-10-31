@@ -1,13 +1,8 @@
 import { gql } from "@apollo/client";
 
 export default gql`
-  query shareTasks(
-    $title: String!
-    $state: String
-    $first: Int
-    $after: String
-  ) {
-    shareTasks(title: $title, state: $state, first: $first, after: $after) {
+  query shareTasks($params: ShareTaskAttributes!) {
+    shareTasks(params: $params) {
       edges {
         cursor
         node {
