@@ -15,16 +15,20 @@ const ShareTasks = () => {
   const { data: { shareTasks } = {}, fetchMore } = useShareTasksQuery({
     fetchPolicy: "cache-and-network",
     variables: {
-      title: title,
-      first: 20,
-      state: state,
+      params: {
+        title: title,
+        first: 20,
+        state: state,
+      },
     },
   });
   const onClickAddPage = () => {
     if (shareTasks?.pageInfo.hasNextPage) {
       fetchMore({
         variables: {
-          after: shareTasks.pageInfo.endCursor,
+          params: {
+            after: shareTasks.pageInfo.endCursor,
+          },
         },
       });
     }
