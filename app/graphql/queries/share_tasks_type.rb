@@ -1,15 +1,13 @@
 module Queries
-  class ShareTasksType < Queries::BaseQuery
+  class ShareTasksType < Queries::LoginRequiredQuery
     include Concern::LoginRequiredQuery
-
-    argument :title, String, required: true
-    argument :state, String, required: false
+    argument :params, InputTypes::ShareTask, required: true
     type ObjectTypes::Task.connection_type, null: false
 
-    def resolve(args)
+    def resolve(params:)
       tasks = Task.joins(:share_tasks).where(share_tasks: { user_id: context[:current_user].id })
-      tasks = tasks.find_title(args[:title]).order(created_at: :desc)
-      tasks = tasks.where(state: args[:state]) if args[:state].present?
+      tasks = tasks.find_title(params.title).order(created_at: :desc)
+      tasks = tasks.where(state: params.state) if params.state.present?
       tasks
     end
   end
