@@ -46,6 +46,7 @@ gem 'bootsnap', require: false
 # gem "image_processing", "~> 1.2"
 
 gem 'graphql'
+gem 'graphql-batch'
 gem 'sentry-rails'
 gem 'sentry-ruby'
 gem 'sidekiq'

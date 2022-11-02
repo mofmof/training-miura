@@ -12,5 +12,9 @@ module ObjectTypes
     field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
 
     field :labels, [ObjectTypes::Label], null: false
+
+    def labels
+      Loaders::AssociationLoader.for(::Task, :labels).load(object)
+    end
   end
 end
