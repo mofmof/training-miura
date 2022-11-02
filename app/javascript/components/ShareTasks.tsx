@@ -1,30 +1,34 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useTasksQuery } from "../graphql/generated";
+import { useShareTasksQuery } from "../graphql/generated";
 import { TaskStateLabel, TaskState } from "./Enum";
 import { useLimitOnDisplay } from "../hooks/useLimitOnDisplay";
 import { useLimitMessage } from "../hooks/useLimitMessage";
 
-const Tasks = () => {
+const ShareTasks = () => {
   const { limitOnDisplay } = useLimitOnDisplay();
   const { limitMessage } = useLimitMessage();
   const [searchTitle, setSearchTitle] = useState("");
   const [searchState, setSearchState] = useState("");
   const [title, setTitle] = useState("");
   const [state, setState] = useState("");
-  const { data: { tasks } = {}, fetchMore } = useTasksQuery({
+  const { data: { shareTasks } = {}, fetchMore } = useShareTasksQuery({
     fetchPolicy: "cache-and-network",
     variables: {
-      title: title,
-      first: 20,
-      state: state,
+      params: {
+        title: title,
+        first: 20,
+        state: state,
+      },
     },
   });
   const onClickAddPage = () => {
-    if (tasks?.pageInfo.hasNextPage) {
+    if (shareTasks?.pageInfo.hasNextPage) {
       fetchMore({
         variables: {
-          after: tasks.pageInfo.endCursor,
+          params: {
+            after: shareTasks.pageInfo.endCursor,
+          },
         },
       });
     }
@@ -39,6 +43,9 @@ const Tasks = () => {
 
   return (
     <div>
+      <div>
+        <Link to={"/"}>トップページへ</Link>
+      </div>
       <input
         className="bg-gray-50 border border-gray-300 my-3"
         value={searchTitle}
@@ -69,7 +76,7 @@ const Tasks = () => {
         </button>
       </div>
       <ul>
-        {tasks?.edges?.map((task) => (
+        {shareTasks?.edges?.map((task) => (
           <li key={task?.node?.id}>
             <Link to={`/tasks/${task?.node?.id}`}>
               {TaskStateLabel(task?.node?.state)}-{task?.node?.title}
@@ -79,11 +86,11 @@ const Tasks = () => {
           </li>
         ))}
       </ul>
-      {tasks?.pageInfo.hasNextPage && (
+      {shareTasks?.pageInfo.hasNextPage && (
         <button onClick={onClickAddPage}>もっとみる</button>
       )}
     </div>
   );
 };
 
-export default Tasks;
+export default ShareTasks;
