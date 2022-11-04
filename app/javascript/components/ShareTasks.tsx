@@ -2,8 +2,12 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useShareTasksQuery } from "../graphql/generated";
 import { TaskStateLabel, TaskState } from "./Enum";
+import { useLimitOnDisplay } from "../hooks/useLimitOnDisplay";
+import { useLimitMessage } from "../hooks/useLimitMessage";
 
 const ShareTasks = () => {
+  const { limitOnDisplay } = useLimitOnDisplay();
+  const { limitMessage } = useLimitMessage();
   const [searchTitle, setSearchTitle] = useState("");
   const [searchState, setSearchState] = useState("");
   const [title, setTitle] = useState("");
@@ -11,16 +15,20 @@ const ShareTasks = () => {
   const { data: { shareTasks } = {}, fetchMore } = useShareTasksQuery({
     fetchPolicy: "cache-and-network",
     variables: {
-      title: title,
-      first: 20,
-      state: state,
+      params: {
+        title: title,
+        first: 20,
+        state: state,
+      },
     },
   });
   const onClickAddPage = () => {
     if (shareTasks?.pageInfo.hasNextPage) {
       fetchMore({
         variables: {
-          after: shareTasks.pageInfo.endCursor,
+          params: {
+            after: shareTasks.pageInfo.endCursor,
+          },
         },
       });
     }
@@ -32,45 +40,6 @@ const ShareTasks = () => {
   };
 
   const resetTaskSearch = () => setTitle("");
-
-  const formatDate = (date: Date): string => {
-    const y: number = date.getFullYear();
-    const m: string = ("00" + (date.getMonth() + 1)).slice(-2);
-    const d: string = ("00" + date.getDate()).slice(-2);
-    return `${y + "-" + m + "-" + d}`;
-  };
-
-  const diffLimitOn = (limitOn: any, state: any) => {
-    if (limitOn == null) return;
-    if (state == "finished") return;
-    const limitOnParse: Date = new Date(limitOn);
-    const today: Date = new Date(formatDate(new Date()));
-    const diffDay: number = Math.floor(
-      (limitOnParse.getTime() - today.getTime()) / 86400000
-    );
-    const limitMessage = () => {
-      if (diffDay > 3 || diffDay == undefined) {
-        return;
-      } else if (diffDay < 1 && diffDay > -1) {
-        return "-期限当日です";
-      } else if (diffDay <= 3 && diffDay > 0) {
-        return `-期限${diffDay}日前です`;
-      } else {
-        return "-期限が過ぎています";
-      }
-    };
-
-    return limitMessage();
-  };
-
-  const limitOnDisplay = (limitOn: any, state: any) => {
-    if (state == "finished") return;
-    if (limitOn) {
-      return `-${limitOn}`;
-    } else {
-      return "-期限未登録";
-    }
-  };
 
   return (
     <div>
@@ -110,9 +79,9 @@ const ShareTasks = () => {
         {shareTasks?.edges?.map((task) => (
           <li key={task?.node?.id}>
             <Link to={`/tasks/${task?.node?.id}`}>
-              {TaskStateLabel(task?.node?.state as any)}-{task?.node?.title}
+              {TaskStateLabel(task?.node?.state)}-{task?.node?.title}
               {limitOnDisplay(task?.node?.limitOn, task?.node?.state)}
-              {diffLimitOn(task?.node?.limitOn, task?.node?.state)}
+              {limitMessage(task?.node?.limitOn, task?.node?.state)}
             </Link>
           </li>
         ))}

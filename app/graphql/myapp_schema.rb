@@ -1,6 +1,7 @@
 class MyappSchema < GraphQL::Schema
   mutation(Types::MutationType)
   query(Types::QueryType)
+  use GraphQL::Batch
 
   # For batch-loading (see https://graphql-ruby.org/dataloader/overview.html)
   use GraphQL::Dataloader
@@ -31,7 +32,6 @@ class MyappSchema < GraphQL::Schema
 
   # Given a string UUID, find the object
   def self.object_from_id(global_id, _query_ctx)
-    # For example, use Rails' GlobalID library (https://github.com/rails/globalid):
     GlobalID.find(global_id)
   end
 end

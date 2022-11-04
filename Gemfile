@@ -48,6 +48,7 @@ gem 'bootsnap', require: false
 gem 'apollo_upload_server'
 gem 'aws-sdk-s3', require: false
 gem 'graphql'
+gem 'graphql-batch'
 gem 'sentry-rails'
 gem 'sentry-ruby'
 gem 'sidekiq'

@@ -13,5 +13,9 @@ module ObjectTypes
     field :image_url, String
 
     field :labels, [ObjectTypes::Label], null: false
+
+    def labels
+      Loaders::AssociationLoader.for(::Task, :labels).load(object)
+    end
   end
 end
