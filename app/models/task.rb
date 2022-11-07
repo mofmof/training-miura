@@ -17,6 +17,6 @@ class Task < ApplicationRecord
   scope :find_title, ->(title) { where('title LIKE ?', "%#{title}%") }
 
   def image_url
-    rails_blob_path(image, disposition: 'attachment', host: 'localhost:3000')
+    rails_blob_path(image, disposition: 'attachment', host: 'localhost:3000') if image_attachment
   end
 end
