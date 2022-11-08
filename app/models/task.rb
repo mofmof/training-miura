@@ -20,16 +20,4 @@ class Task < ApplicationRecord
   def image_url
     rails_blob_path(image, disposition: 'attachment', host: 'localhost:3000') if image_attachment
   end
-
-  def self.import(file)
-    CSV.foreach(file.path, headers: true) do |row|
-      task = find_by(id: row['id']) || new
-      task.attributes = row.to_hash.slice(*updatable_attributes)
-      task.save
-    end
-  end
-
-  def self.updatable_attributes
-    %w[title body limit_on state]
-  end
 end
