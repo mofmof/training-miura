@@ -1,5 +1,7 @@
 module Queries
-  class TasksType < Queries::LoginRequiredQuery
+  class TasksType < Queries::BaseQuery
+    include Concern::LoginRequiredQuery
+
     argument :title, String, required: true
     argument :state, String, required: false
     type ObjectTypes::Task.connection_type, null: false

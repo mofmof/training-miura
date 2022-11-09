@@ -3,7 +3,8 @@ import { useTaskQuery } from "../graphql/generated";
 import TaskDelete from "./TaskDelete";
 import FlashMessage from "./FlashMessage";
 import { TaskStateLabel } from "./Enum";
-import TaskLabels from "./TaskLabels";
+import { TaskLabels } from "./TaskLabels";
+import { UnaddedLabels } from "./UnaddedLabels";
 
 const TaskShow = () => {
   const navigate = useNavigate();
@@ -17,6 +18,7 @@ const TaskShow = () => {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Not found</p>;
   if (!task) return <p>Not found</p>;
+
   return (
     <div>
       <FlashMessage />
@@ -31,8 +33,8 @@ const TaskShow = () => {
       <p>{task.limitOn ? task.limitOn : "期限未登録"}</p>
       <button onClick={onClickTaskShow}>編集</button>
       <TaskDelete id={task.id} />
-      <TaskLabels id={task.id} addFlg={false} />
-      <TaskLabels id={task.id} addFlg={true} />
+      <TaskLabels id={task.id} labels={task.labels} />
+      <UnaddedLabels id={task.id} />
     </div>
   );
 };

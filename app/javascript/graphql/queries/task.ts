@@ -8,6 +8,10 @@ export default gql`
       body
       state
       limitOn
+      labels {
+        id
+        name
+      }
     }
   }
 `;

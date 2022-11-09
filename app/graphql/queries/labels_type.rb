@@ -1,5 +1,7 @@
 module Queries
-  class LabelsType < Queries::LoginRequiredQuery
+  class LabelsType < Queries::BaseQuery
+    include Concern::LoginRequiredQuery
+
     type [ObjectTypes::Label], null: false
 
     def resolve
