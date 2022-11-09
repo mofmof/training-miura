@@ -10,6 +10,7 @@ import CsvExport from "./components/CsvExport";
 import ParentShareTaskUsers from "./components/ParentShareTaskUsers";
 import Users from "./components/Admin/Users";
 import ShareTasks from "./components/ShareTasks";
+import { ApiTasks } from "./rest/ApiTasks";
 
 const App = () => {
   return (
@@ -29,6 +30,9 @@ const App = () => {
 
           {/* 管理者のみ */}
           <Route path="users" element={<Users />} />
+
+          {/* RESTAPIでの実装 */}
+          <Route path="frontend/tasks" element={<ApiTasks />} />
         </Routes>
       </Router>
     </>

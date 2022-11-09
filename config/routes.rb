@@ -23,4 +23,10 @@ Rails.application.routes.draw do
   post 'login', to: 'user_sessions#create'
   get 'logout', to: 'tasks#index'
   delete 'logout' => 'user_sessions#destroy'
+
+  # REST API学習用ルーティング
+  namespace :api do
+    resources :tasks, only: %i[index]
+  end
+  get 'frontend/tasks', to: 'tasks#index'
 end
