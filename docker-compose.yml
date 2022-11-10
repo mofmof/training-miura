@@ -37,7 +37,7 @@ services:
     build: .
     command: bundle exec sidekiq
     volumes:
-      - .:/app
+      - .:/myapp
     ports:
       - "3001:3000"
     depends_on:
