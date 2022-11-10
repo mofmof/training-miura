@@ -6,5 +6,6 @@ module InputTypes
     argument :body, String, required: false
     argument :state, Enum::TaskStateEnum, required: true
     argument :limit_on, String, required: false
+    argument :image, ObjectTypes::File, required: false
   end
 end
