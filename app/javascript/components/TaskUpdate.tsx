@@ -10,7 +10,9 @@ type Props = {
     title: string;
     body?: string | null | undefined;
     state: TaskStateEnum;
-    limitOn: string;
+    limitOn?: any;
+    imageUrl?: string | null | undefined;
+    labels: {}[];
   };
 };
 
