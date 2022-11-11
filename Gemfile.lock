@@ -366,12 +366,9 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-<<<<<<< HEAD
   active_model_serializers
-=======
   apollo_upload_server
   aws-sdk-s3
->>>>>>> 7f78384e6d8e91ae30fac5797c071d44a1b827d4
   bootsnap
   bullet
   capybara
