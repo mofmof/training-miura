@@ -10,11 +10,12 @@ const TaskShow = () => {
   const navigate = useNavigate();
   const onClickTaskShow = () => navigate(`/tasks/${id}/edit`);
   const { id } = useParams();
+  if (!id) return <></>;
   const {
     loading,
     error,
     data: { task } = {},
-  } = useTaskQuery({ variables: { id: id as string } });
+  } = useTaskQuery({ variables: { id: id } });
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Not found</p>;
   if (!task) return <p>Not found</p>;
@@ -28,11 +29,12 @@ const TaskShow = () => {
       </div>
       <p>{task.id}</p>
       <p>{task.title}</p>
-      <p>{TaskStateLabel(task.state as any)}</p>
+      <p>{TaskStateLabel(task.state)}</p>
       <p style={{ whiteSpace: "pre-line" }}>{task.body}</p>
       <p>{task.limitOn ? task.limitOn : "期限未登録"}</p>
       <button onClick={onClickTaskShow}>編集</button>
       <TaskDelete id={task.id} />
+      {task.imageUrl && <img src={task.imageUrl} />}
       <TaskLabels id={task.id} labels={task.labels} />
       <UnaddedLabels id={task.id} />
     </div>

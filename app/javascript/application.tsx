@@ -1,17 +1,12 @@
-import React from "react";
-import { relayStylePagination } from "@apollo/client/utilities";
+import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { setContext } from "@apollo/client/link/context";
+import { relayStylePagination } from "@apollo/client/utilities";
+import { createUploadLink } from "apollo-upload-client";
+import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import Cookie from "js-cookie";
 import axios from "../../lib/axios";
-
 import App from "./App";
-import {
-  ApolloClient,
-  InMemoryCache,
-  ApolloProvider,
-  createHttpLink,
-} from "@apollo/client";
 
 const container = document.getElementById("root") as HTMLElement;
 const root = createRoot(container);
@@ -28,7 +23,7 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 
-const httpLink = createHttpLink({
+const httpLink = createUploadLink({
   uri: "/graphql",
 });
 
@@ -47,10 +42,10 @@ const client = new ApolloClient({
 
 document.addEventListener("DOMContentLoaded", () => {
   root.render(
-    <React.StrictMode>
+    <StrictMode>
       <ApolloProvider client={client}>
         <App />
       </ApolloProvider>
-    </React.StrictMode>
+    </StrictMode>
   );
 });

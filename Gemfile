@@ -46,6 +46,8 @@ gem 'bootsnap', require: false
 # gem "image_processing", "~> 1.2"
 
 gem 'active_model_serializers'
+gem 'apollo_upload_server'
+gem 'aws-sdk-s3', require: false
 gem 'graphql'
 gem 'graphql-batch'
 gem 'sentry-rails'

@@ -18,6 +18,7 @@ const InputTask = () => {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [limitOn, setLimitOn] = useState("");
+  const [image, setImage] = useState<File>();
   const state: TaskStateEnum = TaskStateEnum.Unstarted;
   const onClickCreateTask = () => {
     createTask({
@@ -27,6 +28,7 @@ const InputTask = () => {
           body: body,
           limitOn: limitOn,
           state: state,
+          image: image,
         },
       },
     });
@@ -56,6 +58,17 @@ const InputTask = () => {
           type="date"
           value={limitOn}
           onChange={(e) => setLimitOn(e.target.value)}
+        />
+      </div>
+      <div>
+        <input
+          type="file"
+          onChange={(e) => {
+            const files = e.currentTarget.files;
+            if (!files || files?.length === 0) return;
+            const file = files[0];
+            setImage(file);
+          }}
         />
       </div>
       <div>
