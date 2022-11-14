@@ -26,7 +26,9 @@ Rails.application.routes.draw do
 
   # REST API学習用ルーティング
   namespace :api do
-    resources :tasks, only: %i[index]
+    resources :tasks, only: %i[index] do
+      resources :labels, only: %i[index]
+    end
   end
   get 'frontend/tasks', to: 'tasks#index'
 end
