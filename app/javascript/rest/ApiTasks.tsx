@@ -1,5 +1,6 @@
 import axios from "axios";
-import { useState, FC } from "react";
+import { useState, useEffect } from "react";
+import { ApiTaskLabels } from "./ApiTaskLabels";
 
 type TaskType = {
   id: string;
@@ -11,17 +12,22 @@ type TaskType = {
 
 export const ApiTasks = () => {
   const [tasks, setTasks] = useState<Array<TaskType>>([]);
-  axios.get<Array<TaskType>>("/api/tasks").then((res) => {
-    setTasks(res.data);
+  useEffect(() => {
+    axios.get<Array<TaskType>>("/api/tasks").then((res) => {
+      setTasks(res.data);
+    });
   });
 
   return (
-    <div>
+    <>
       {tasks.map((task) => (
-        <p>
+        <div key={task.id}>
           {task.id}-{task.title}-{task.limit_on}-{task.state}
-        </p>
+          <div>
+            <ApiTaskLabels id={task.id} />
+          </div>
+        </div>
       ))}
-    </div>
+    </>
   );
 };
