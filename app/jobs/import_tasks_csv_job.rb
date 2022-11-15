@@ -10,15 +10,17 @@ class ImportTasksCsvJob < ApplicationJob
 
     ActiveRecord::Base.transaction do
       CSV.foreach(tmp_file_path, headers: true) do |line|
-        user.tasks.create(
+        user.tasks.create!(
           title: line[0],
           body: line[1],
           limit_on: line[2],
           state: line[3]
         )
       end
-      user.csv_file.purge
     end
+    user.csv_file.purge
     UserMailer.with(to: user.email).csv_import_complete.deliver_now
+  rescue ActiveRecord::RecordInvalid
+    UserMailer.with(to: user.email).csv_import_incomplete.deliver_now
   end
 end
