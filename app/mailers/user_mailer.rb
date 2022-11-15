@@ -14,7 +14,7 @@ class UserMailer < ApplicationMailer
     mail(to: params[:to], subject:)
   end
 
-  def receive_csv
+  def csv_import_complete
     @user = User.find_by(email: params[:to])
     subject = 'タスクインポート完了通知'
     mail(to: params[:to], subject:)

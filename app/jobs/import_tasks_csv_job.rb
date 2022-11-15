@@ -19,5 +19,6 @@ class ImportTasksCsvJob < ApplicationJob
       end
       user.csv_file.purge
     end
+    UserMailer.with(to: user.email).csv_import_complete.deliver_now
   end
 end
