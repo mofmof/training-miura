@@ -50,6 +50,7 @@ gem 'apollo_upload_server'
 gem 'aws-sdk-s3', require: false
 gem 'graphql'
 gem 'graphql-batch'
+gem 'roo'
 gem 'sentry-rails'
 gem 'sentry-ruby'
 gem 'sidekiq'

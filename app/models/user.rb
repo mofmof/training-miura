@@ -4,6 +4,7 @@ class User < ApplicationRecord
   has_many :tasks, dependent: :destroy
   has_many :labels, dependent: :destroy
   has_many :share_tasks, dependent: :destroy
+  has_one_attached :csv_file
 
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true

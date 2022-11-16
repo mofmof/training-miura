@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import Tasks from "./Tasks";
 import InputTask from "./InputTask";
 import FlashMessage from "./FlashMessage";
-import ShareTasks from "./ShareTasks";
+import { CsvImport } from "./CsvImport";
 
 const TopPage = () => {
   return (
@@ -17,6 +17,7 @@ const TopPage = () => {
       <div>
         <Link to={"/csv_export"}>タスクをダウンロード</Link>
       </div>
+      <CsvImport />
       <div>
         <Link to={"/logout"}>ログアウト</Link>
       </div>

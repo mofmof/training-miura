@@ -1,5 +1,6 @@
 class Task < ApplicationRecord
   include Rails.application.routes.url_helpers
+  require 'csv'
 
   belongs_to :user
   has_many :task_labels, dependent: :destroy
