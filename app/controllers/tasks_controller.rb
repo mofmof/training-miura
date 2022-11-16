@@ -6,4 +6,10 @@ class TasksController < ApplicationController
     ExportTasksCsvJob.perform_later(current_user.id)
     redirect_to root_path
   end
+
+  def csv_import
+    current_user.update(csv_file: params[:file])
+    ImportTasksCsvJob.perform_later(current_user.id) if current_user.csv_file.attached?
+    redirect_to root_url
+  end
 end
