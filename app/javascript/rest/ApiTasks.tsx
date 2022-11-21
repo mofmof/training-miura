@@ -16,7 +16,7 @@ export const ApiTasks = () => {
     axios.get<Array<TaskType>>("/api/tasks").then((res) => {
       setTasks(res.data);
     });
-  });
+  }, []);
 
   return (
     <>

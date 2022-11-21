@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState, FC } from "react";
+import { useState, FC, useEffect } from "react";
 
 type LabelType = {
   id: string;
@@ -13,9 +13,11 @@ type Props = {
 export const ApiTaskLabels: FC<Props> = (props) => {
   const { id } = props;
   const [labels, setLabels] = useState<Array<LabelType>>([]);
-  axios.get<Array<LabelType>>(`/api/tasks/${id}/labels`).then((res) => {
-    setLabels(res.data);
-  });
+  useEffect(() => {
+    axios.get<Array<LabelType>>(`/api/tasks/${id}/labels`).then((res) => {
+      setLabels(res.data);
+    });
+  }, []);
 
   return (
     <>
