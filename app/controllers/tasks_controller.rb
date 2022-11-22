@@ -12,8 +12,4 @@ class TasksController < ApplicationController
     ImportTasksCsvJob.perform_later(current_user.id) if current_user.csv_file.attached?
     redirect_to root_url
   end
-
-  def test_sidekiq
-    TestSidekiqJob.perform_later
-  end
 end
