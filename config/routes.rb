@@ -17,6 +17,8 @@ Rails.application.routes.draw do
   get 'csv_export', to: 'tasks#csv_export'
   post 'csv_import', to: 'tasks#csv_import'
 
+  get 'test_sidekiq', to: 'tasks#test_sidekiq'
+
   get 'users', to: 'tasks#index'
 
   get 'signup', to: 'users#new'
