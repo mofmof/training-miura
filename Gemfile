@@ -46,7 +46,7 @@ gem 'bootsnap', require: false
 # gem "image_processing", "~> 1.2"
 
 gem 'apollo_upload_server'
-gem 'aws-sdk-s3', require: false
+gem 'aws-sdk-s3', '1.113.0', require: false
 gem 'graphql'
 gem 'graphql-batch'
 gem 'roo'
