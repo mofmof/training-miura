@@ -10,6 +10,7 @@ import CsvExport from "./components/CsvExport";
 import ParentShareTaskUsers from "./components/ParentShareTaskUsers";
 import Users from "./components/Admin/Users";
 import ShareTasks from "./components/ShareTasks";
+import InputTask from "./components/InputTask";
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
       <Router>
         <Routes>
           <Route path="/" element={<TopPage />} />
+          <Route path="tasks/new" element={<InputTask />} />
           <Route path="tasks/:id" element={<TaskShow />} />
           <Route path="sharetasks" element={<ShareTasks />} />
           <Route path="tasks/:id/edit" element={<TaskUpdateParent />} />

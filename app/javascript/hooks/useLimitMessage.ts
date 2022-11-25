@@ -19,11 +19,11 @@ export const useLimitMessage = () => {
     if (diffDay > 3 || diffDay == undefined) {
       return;
     } else if (diffDay < 1 && diffDay > -1) {
-      return "-期限当日です";
+      return "期限当日です";
     } else if (diffDay <= 3 && diffDay > 0) {
-      return `-期限${diffDay}日前です`;
+      return `期限${diffDay}日前です`;
     } else {
-      return "-期限が過ぎています";
+      return "期限が過ぎています";
     }
   };
   return { limitMessage };
