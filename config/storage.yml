@@ -12,7 +12,7 @@ amazon:
   access_key_id: ENV['AWS_S3_ACCESS_KEY_ID']
   secret_access_key: ENV['AWS_S3_SECRET_KEY_ID']
   s3_endpoint: "s3-ap-northeast-1.amazonaws.com"
-  # bucket: mofmof-training-miura
+  bucket: mofmof-training-miura
 
 # Remember not to checkin your GCS keyfile to a repository
 # google:
