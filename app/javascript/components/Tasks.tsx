@@ -105,11 +105,7 @@ const Tasks = () => {
               <td className="px-2">
                 {limitMessage(task?.node?.limitOn, task?.node?.state)}
               </td>
-              <td>
-                <button className="text-center text-red-400 border border-red-500 hover:bg-red-400 hover:text-white rounded px-4">
-                  {task?.node?.id && <TaskDelete id={task?.node?.id} />}
-                </button>
-              </td>
+              <td>{task?.node?.id && <TaskDelete id={task?.node?.id} />}</td>
             </tr>
           ))}
         </tbody>
