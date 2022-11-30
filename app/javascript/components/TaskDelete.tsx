@@ -22,7 +22,14 @@ const TaskDelete: React.FC<Props> = (props) => {
     deleteTask({ variables: { id: id } });
   };
 
-  return <button onClick={onClickTaskDelete}>削除</button>;
+  return (
+    <button
+      className="text-center text-red-400 border border-red-500 hover:bg-red-400 hover:text-white rounded px-4"
+      onClick={onClickTaskDelete}
+    >
+      削除
+    </button>
+  );
 };
 
 export default TaskDelete;
