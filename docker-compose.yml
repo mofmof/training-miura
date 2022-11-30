@@ -13,6 +13,8 @@ services:
   web:
     stdin_open: true
     tty: true
+    env_file:
+      - .env
     build: .
     command: bash -c "rm -f tmp/pids/server.pid && yarn install  && ./bin/dev"
     volumes:
