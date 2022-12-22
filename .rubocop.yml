@@ -19,6 +19,16 @@ AllCops:
   - 'config/initializers/filter_parameter_logging.rb'
   - 'test/**/*'
 
+RSpec/ExampleLength:
+  Enabled: false
+
+RSpec/FilePath:
+  Enabled: false
+
+RSpec/MultipleExpectations:
+  Enabled: true
+  Max: 5
+
 Style/FrozenStringLiteralComment:
   Enabled: false
 
